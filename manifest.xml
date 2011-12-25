@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_plugin_manifest_file>
+    <SdkVersion major="1" minor="11"  release="15" />
+    <Plugin name="Format_Fortran_Indent_Plugin">
+        <Value title="FormatFortranIndentPlugin" />
+        <Value version="0.1" />
+        <Value description="Code::Bloacks Plugin to Format Source Code Indent in Fortran 95, Fortran 90 (free source form)" />
+        <Value author="YWX" />
+        <Value authorEmail="wxFortranIndent@163.com" />
+        <Value authorWebsite="" />
+        <Value thanksTo="" />
+        <Value license="GNU General Public License, version 3" />
+    </Plugin>
+</CodeBlocks_plugin_manifest_file>
