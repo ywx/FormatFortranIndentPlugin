@@ -32,6 +32,7 @@
 					<Add directory="$(#wx.lib)\gcc_dll\mswu" />
 				</Compiler>
 				<Linker>
+					<Add option="-s" />
 					<Add option="-mthreads" />
 					<Add library="codeblocks" />
 					<Add library="wxmsw28u" />
@@ -39,7 +40,6 @@
 					<Add directory="$(#wx.lib)\gcc_dll" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="strip Format_Fortran_Indent_Plugin.dll" />
 					<Add after="zip -j9 Format_Fortran_Indent_Plugin.zip manifest.xml" />
 					<Add after="zip -j9 Format_Fortran_Indent_Plugin.cbplugin Format_Fortran_Indent_Plugin.dll Format_Fortran_Indent_Plugin.zip" />
 				</ExtraCommands>
