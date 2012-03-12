@@ -1,0 +1,26 @@
+﻿ChangeLog for Format Fortran Indent Plugin
+------------------------------------------
+
+Version 0.1 2011-12-25
+======================
+Init project for Format Fortran Indent Plugin.
+Create GitHub repository. https://github.com/ywx/FormatFortranIndentPlugin
+
+Version 0.1.1b 2012-3-11
+========================
+Fix the bug reported by Darius Markauskas<darmar.lt@gmail.com>.
+Add Readme.txt and Changelog.txt.
+
+
+
+更新历史：
+---------
+
+v0.1 2011-12-25
+===============
+初始化项目代码，并上传到 https://github.com/ywx/FormatFortranIndentPlugin
+
+v0.1.1b 2012-3-11
+=================
+修复 Darius Markauskas<darmar.lt@gmail.com> 报告的 Bug。只能说是忽悠他一下，提高了代码的适应能力，仅此而已。毕竟人家把此插件放到了 Code::Blocks IDE for Fortran 预发行版中。
+增加 Readme.txt 和 Changelog.txt
