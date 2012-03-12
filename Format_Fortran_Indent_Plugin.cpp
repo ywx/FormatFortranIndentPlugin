@@ -1,6 +1,6 @@
 /***************************************************************
  * Name:      Format_Fortran_Indent_Plugin.cpp
- * Purpose:   Code::Bloacks Plugin to Format Source Code Indent in Fortran 95, Fortran 90 (free source form)
+ * Purpose:   Code::Blocks Plugin to Format Source Code Indent in Fortran 95, Fortran 90 Source Code (free source form)
  * Author:    YWX (wxFortranIndent@163.com) or wxFortranIndent (wxFortranIndent@gmail.com)
  * Created:   2011-12-22
  * Copyright: (c) 2011 YWX <wxFortranIndent@163.com>
@@ -13,6 +13,12 @@
 
 #include <wx/progdlg.h>
 #include "cbstyledtextctrl.h"
+
+#include <editormanager.h>
+#include <projectmanager.h>
+#include <logmanager.h>
+#include <cbproject.h>
+#include <cbeditor.h>
 
 //#include <wx/regex.h>
 
@@ -272,20 +278,23 @@ void Format_Fortran_Indent_Plugin::myCreateFortranRegEx( )
 	myFortranRegEx[wxT("regexEndProgram")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)((program)|(module)|(interface)|((block)(\\s*)(data))|(subroutine)|(function))((\\s+)([[:alnum:]_]+))?((\\s*)!(.*))?$"), options );
 	myFortranRegEx[wxT("regexProgram")] = new wxRegEx( wxT("^(\\s*)((program)|(module)|(interface))((\\s+)([[:alnum:]_]+))?((\\s*)!(.*))?$"), options );
 	myFortranRegEx[wxT("regexBlock")] = new wxRegEx( wxT("^(\\s*)(((block)(\\s*)(data)))(\\s*)"), options );
-	myFortranRegEx[wxT("regexSubroutine")] = new wxRegEx( wxT("^(\\s*)(((pure)(\\s+))?((recursive)(\\s+))?((elemental)(\\s+))?(subroutine))((\\s+)([[:alnum:]_]+)(\\s*)(\\()(\\s*)(.*)(\\s*)(\\)))(\\s*)"), options );
-	myFortranRegEx[wxT("regexFunction")] = new wxRegEx( wxT("^(\\s*)((pure)(\\s+))?(((recursive)(\\s+))?((elemental)(\\s+))?(((((integer)|(real)|(complex)|(logical)|(character))((\\()(\\s*)(\\d*)(\\s*)(\\)))?)|(type))(\\s*))?(function))((\\s+)([[:alnum:]_]+)(\\s*)(\\()(\\s*)(.*)(\\s*)(\\)))(\\s*)"), options );
-	myFortranRegEx[wxT("regexType")] = new wxRegEx( wxT("^(\\s*)((type)(\\s*)(\\())(\\s*)"), options );
-	myFortranRegEx[wxT("regexTypeDefine")] = new wxRegEx( wxT("^(\\s*)(((type)(\\s*)(,(\\s*)((public)|(privat)e|(protected))?)))(\\s*)"), options );
-	myFortranRegEx[wxT("regexEndType")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)(type)(\\s*)"), options );
+	myFortranRegEx[wxT("regexSubroutine")] = new wxRegEx( wxT("^(\\s*)((pure)(\\s+))?((recursive)(\\s+))?((elemental)(\\s+))?(subroutine)(\\s+)([[:alnum:]_]+)(\\s*)(\\()(\\s*)(([[:alnum:]_]+)((\\s*)(,)(\\s*)([[:alnum:]_]+))*)?(\\s*)(\\))(\\s*)"), options );
+	myFortranRegEx[wxT("regexFunction")] = new wxRegEx( wxT("^(\\s*)((pure)(\\s+))?(((recursive)(\\s+))?((elemental)(\\s+))?(((((integer)|(real)|(complex)|(logical)|(character))((\\()(\\s*)((len)(\\s*)(=)(\\s*))?(\\d*)(\\s*)(\\)))?)|(type))(\\s*))?(function))((\\s+)([[:alnum:]_]+)(\\s*)(\\()(\\s*)(.*)(\\s*)(\\)))(\\s*)"), options );
+	myFortranRegEx[wxT("regexType")] = new wxRegEx( wxT("^(\\s*)((type)(\\s*)(\\()(\\s*)([[:alnum:]_]+)(\\s*)(\\)))(\\s*)"), options );
+	myFortranRegEx[wxT("regexTypeDefine")] = new wxRegEx( wxT("^(\\s*)((type)((\\s*),(\\s*)((public)|(private)|(protected))(\\s+))?((\\s*)(::)?(\\s*)([[:alnum:]_]+)))(\\s*)"), options );
+	myFortranRegEx[wxT("regexEndType")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)(type)((\\s+)([[:alnum:]_]+))?(\\s*)"), options );
 	myFortranRegEx[wxT("regexEndDo")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)(((do)((\\s+)([[:alnum:]_]+))?)|(forall))(\\s*)"), options );
-	myFortranRegEx[wxT("regexDo")] = new wxRegEx( wxT("^(\\s*)(([[:alnum:]_]+(\\s*)(:)(\\s*)))?(do)((\\s+)((.*)+))?((\\s*)!(.*))?$"), options );
-	myFortranRegEx[wxT("regexForall")] = new wxRegEx( wxT("^(\\s*)(forall)(\\s*)(\\()(\\s*)(.*)(\\s*)(\\))((\\s*)!(.*))?$"), options );
+	myFortranRegEx[wxT("regexDo")] = new wxRegEx( wxT("^(\\s*)(([[:alnum:]_]+)(\\s*)(:)(\\s*))?(do)((\\s+)((.*)+))?((\\s*)!(.*))?$"), options );
+	myFortranRegEx[wxT("regexForall")] = new wxRegEx( wxT("^(\\s*)((forall)|((do)(\\s*)(while)))(\\s*)(\\()(\\s*)(.*)(\\s*)(\\))((\\s*)!(.*))?$"), options );
 	myFortranRegEx[wxT("regexEndSelect")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)(select)(\\s*)"), options );
 	myFortranRegEx[wxT("regexSelectCase")] = new wxRegEx( wxT("^(\\s*)((select)(\\s+)(case))(\\s*)(\\()(\\s*)(.*)(\\s*)(\\))((\\s*)!(.*))?$"), options );
 	myFortranRegEx[wxT("regexCase")] = new wxRegEx( wxT("^(\\s*)(((case)(\\s*)(\\()(\\s*)(.*)(\\s*)(\\)))|((case)(\\s+)(default)))((\\s*)!(.*))?$"), options );
-	myFortranRegEx[wxT("regexIfThen")] = new wxRegEx( wxT("^(\\s*)((if)(\\s*)(\\()(\\s*)(.*)(\\s*)(\\))(\\s*)(then))(\\s*)"), options );
+	myFortranRegEx[wxT("regexIfThen")] = new wxRegEx( wxT("^(\\s*)(([[:alnum:]_]+)(\\s*)(:)(\\s*))?((if)(\\s*)(\\()(\\s*)(.*)(\\s*)(\\))(\\s*)(then))(\\s*)"), options );
 	myFortranRegEx[wxT("regexElse")] = new wxRegEx( wxT("^(\\s*)(else)(\\s*)((if)(\\s*)(\\()(\\s*)(.*)(\\s*)(\\))(\\s*)(then))?((\\s*)!(.*))?$"), options );
 	myFortranRegEx[wxT("regexEndIf")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)(if)(\\s*)"), options );
+	myFortranRegEx[wxT("regexWhere")] = new wxRegEx( wxT("^(\\s*)((where)(\\s*)(\\()(\\s*)(.*)(\\s*)(\\)))(\\s*)"), options );
+	myFortranRegEx[wxT("regexElseWhere")] = new wxRegEx( wxT("^(\\s*)(elsewhere)(\\s*)((\\()(\\s*)(.*)(\\s*)(\\)))?((\\s*)!(.*))?$"), options );
+	myFortranRegEx[wxT("regexEndWhere")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)(where)(\\s*)"), options );
 	myFortranRegEx[wxT("regexEndOnly")] = new wxRegEx( wxT("^(\\s*)(end)((\\s*)!(.*))?$"), options );
 
 }
@@ -419,6 +428,28 @@ void Format_Fortran_Indent_Plugin::getFortranIndentLine( MyFortranRegEx pFortran
         return ;
     }
 
+    // where elsewhere
+    if ( pFortranRegEx[wxT("regexWhere")]->Matches( src ) )
+    {
+        indentNum += 1;
+        isCur = false;
+		//msg = wxT("Match (where)    ");
+        return ;
+    }
+    if ( pFortranRegEx[wxT("regexElseWhere")]->Matches( src ) )
+    {
+        isCur = false;
+		//msg = wxT("Match (elsewhere)    ");
+        return ;
+    }
+    if ( pFortranRegEx[wxT("regexEndWhere")]->Matches( src ) )
+    {
+        indentNum -= 1;
+        isCur = true;
+		//msg = wxT("Match (end where)    ");
+        return ;
+    }
+
     if ( pFortranRegEx[wxT("regexEndOnly")]->Matches( src ) )
     {
         indentNum -= 1;
@@ -427,61 +458,10 @@ void Format_Fortran_Indent_Plugin::getFortranIndentLine( MyFortranRegEx pFortran
         return ;
     }
 
-    // where elsewhere
 }
 
 // Special code to compare strings which doesn't care
 // about spaces leading up to the EOL.
-/*
-static bool BuffersDiffer( const wxString &a, const wxString &b )
-{
-    const wxChar *aCurrent = a.c_str();
-    const wxChar *bCurrent = b.c_str();
-    const wxChar * const aEnd = aCurrent + a.Len();
-    const wxChar * const bEnd = bCurrent + b.Len();
-
-    while ( aCurrent != aEnd && bCurrent != bEnd )
-    {
-        if ( *aCurrent != *bCurrent )
-        {
-            // Check for varying space at EOL
-            while ( *aCurrent == ' ' || *aCurrent == '\t' )
-            {
-                if ( ++aCurrent == aEnd )
-                    break;
-            }
-            while ( *bCurrent == ' ' || *bCurrent == '\t' )
-            {
-                if ( ++bCurrent == bEnd )
-                    break;
-            }
-
-            // Make sure it was at EOL
-            if ( ( *aCurrent != '\r' && *aCurrent != '\n' ) || ( *bCurrent != '\r' && *bCurrent != '\n' ) )
-                return true;
-        }
-
-        ++aCurrent;
-        ++bCurrent;
-    }
-
-    while ( aCurrent != aEnd )
-    {
-        if ( *aCurrent != ' ' && *aCurrent != '\t' )
-            return true;
-        ++aCurrent;
-    }
-
-    while ( bCurrent != bEnd )
-    {
-        if ( *bCurrent != ' ' && *bCurrent != '\t' )
-            return true;
-        ++bCurrent;
-    }
-
-    return false;
-}
-*/
 static bool BuffersDiffer( const wxString &a, const wxString &b, const wxString &eolChars )
 //static bool BuffersDiffer( const wxString &a, const wxString &b )
 {
