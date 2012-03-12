@@ -11,6 +11,13 @@ Version 0.1.1b 2012-3-11
 Fix the bug reported by Darius Markauskas<darmar.lt@gmail.com>.
 Add Readme.txt and Changelog.txt.
 
+Version 0.1.1b 2012-3-12
+========================
+Add do while ()
+Update type
+Add where construct not test
+Add FormatFortranIntentPlugin_linux.cbp not test( Provide by Darius Markauskas<darmar.lt@gmail.com> )
+
 
 
 更新历史：
@@ -24,3 +31,10 @@ v0.1.1b 2012-3-11
 =================
 修复 Darius Markauskas<darmar.lt@gmail.com> 报告的 Bug。只能说是忽悠他一下，提高了代码的适应能力，仅此而已。毕竟人家把此插件放到了 Code::Blocks IDE for Fortran 预发行版中。
 增加 Readme.txt 和 Changelog.txt
+
+v0.1.1b 2012-3-12
+=================
+增加处理 do while ()
+更新处理 type
+增加处理 where construct 未测试
+增加配置 FormatFortranIntentPlugin_linux.cbp 未测试( 由 Darius Markauskas<darmar.lt@gmail.com> 提供)
