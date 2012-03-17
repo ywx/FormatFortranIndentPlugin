@@ -1,7 +1,7 @@
 /***************************************************************
  * Name:      Format_Fortran_Indent_Plugin.h
  * Purpose:   declaration of Code::Blocks plugin Format_Fortran_Indent_Plugin
- * Author:    YWX (wxFortranIndent@163.com) or wxFortranIndent (wxFortranIndent@gmail.com)
+ * Author:    YWX (wxFortranIndent@163.com)
  * Created:   2011-12-22
  * Copyright: (c) 2011 YWX <wxFortranIndent@163.com>
  * License:   GNU General Public License, version 3
@@ -17,14 +17,15 @@
 #include <wx/wx.h>
 #endif
 
-#include <cbplugin.h> // for "class cbToolPlugin"
+#include <cbplugin.h> // for "class cbToolPlugin" // for "class cbPlugin"
 
 # include <wx/hashmap.h>
 # include <wx/regex.h>
 
 #define Max_Line_Char 512
 
-class Format_Fortran_Indent_Plugin : public cbToolPlugin
+//class Format_Fortran_Indent_Plugin : public cbToolPlugin
+class Format_Fortran_Indent_Plugin : public cbPlugin
 {
 public:
     /** Constructor. */
@@ -75,6 +76,15 @@ public:
         return 0;
     }
 
+    /** This method is called by Code::Blocks and is used by the plugin
+      * to add any menu items it needs on Code::Blocks's menu bar.\n
+      * It is a pure virtual method that needs to be implemented by all
+      * plugins. If the plugin does not need to add items on the menu,
+      * just do nothing ;)
+      * @param menuBar the wxMenuBar to create items in
+      */
+    virtual void BuildMenu(wxMenuBar* menuBar);
+
     /** This method is called by Code::Blocks core modules (EditorManager,
       * ProjectManager etc) and is used by the plugin to add any menu
       * items it needs in the module's popup menu. For example, when
@@ -91,6 +101,16 @@ public:
       * @param data pointer to FileTreeData object (to access/modify the file tree)
       */
     void BuildModuleMenu( const ModuleType type, wxMenu* menu, const FileTreeData* data = 0 );
+
+    /** This method is called by Code::Blocks and is used by the plugin
+      * to add any toolbar items it needs on Code::Blocks's toolbar.\n
+      * It is a pure virtual method that needs to be implemented by all
+      * plugins. If the plugin does not need to add items on the toolbar,
+      * just do nothing ;)
+      * @param toolBar the wxToolBar to create items on
+      * @return The plugin should return true if it needed the toolbar, false if not
+      */
+    virtual bool BuildToolBar(wxToolBar* toolBar);
 
     /** @brief Execute the plugin.
       *

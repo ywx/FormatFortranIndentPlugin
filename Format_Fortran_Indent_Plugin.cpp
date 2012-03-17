@@ -1,7 +1,8 @@
 /***************************************************************
  * Name:      Format_Fortran_Indent_Plugin.cpp
- * Purpose:   Code::Blocks Plugin to Format Source Code Indent in Fortran 95, Fortran 90 Source Code (free source form)
- * Author:    YWX (wxFortranIndent@163.com) or wxFortranIndent (wxFortranIndent@gmail.com)
+ * Purpose:   Code::Blocks Plugin to Format Source Code Indent
+ * in Fortran 95, Fortran 90 Source Code (free source form)
+ * Author:    YWX (wxFortranIndent@163.com)
  * Created:   2011-12-22
  * Copyright: (c) 2011 YWX <wxFortranIndent@163.com>
  * License:   GNU General Public License, version 3
@@ -96,6 +97,52 @@ int Format_Fortran_Indent_Plugin::Configure()
 }
 
 
+void Format_Fortran_Indent_Plugin::BuildMenu(wxMenuBar* menuBar)
+{
+    //The application is offering its menubar for your plugin,
+    //to add any menu items you want...
+    if (!IsAttached())
+        return;
+    //Append any items you need in the menu...
+    /// Append to Menu Fortran
+    int pos = menuBar->FindMenu(_("&Fortran"));
+    if( pos != wxNOT_FOUND )
+    {
+        wxMenu* m_FortranMenu = menuBar->GetMenu(pos);
+        m_FortranMenu->Append(idCodeFortranIndentActiveFile, _("Format Fortran Indent Plugin"));
+    }
+    else
+    {
+        //Manager::Get()->GetLogManager()->Log( _("Could not find Fortran Menu!") );
+        /// Append to Menu Tools
+        pos = menuBar->FindMenu(_("&Tools"));
+        if( pos != wxNOT_FOUND )
+        {
+            wxMenu* m_ToolsMenu = menuBar->GetMenu(pos);
+            m_ToolsMenu->Prepend(idCodeFortranIndentActiveFile, _("Format Fortran Indent Plugin"));
+        }
+        else
+        {
+            Manager::Get()->GetLogManager()->Log( _("Could not find Tools Menu!") );
+        }
+    }
+
+    /// Append to Menu Plugins
+    pos = menuBar->FindMenu(_("P&lugins"));
+    if( pos != wxNOT_FOUND )
+    {
+        wxMenu* m_PluginsMenu = menuBar->GetMenu(pos);
+        m_PluginsMenu->Prepend(idCodeFortranIndentActiveFile, _("Format Fortran Indent Plugin"));
+    }
+    else
+    {
+        Manager::Get()->GetLogManager()->Log( _("Could not find Plugins Menu!") );
+    }
+    //NOTE: Be careful in here... The application's menubar is at your disposal.
+    //NotImplemented(_T("Format_Fortran_Indent_Plugin::BuildMenu()"));
+}
+
+
 void Format_Fortran_Indent_Plugin::BuildModuleMenu( const ModuleType type, wxMenu* menu, const FileTreeData* data )
 {
     if ( !menu || !IsAttached() )
@@ -114,6 +161,7 @@ void Format_Fortran_Indent_Plugin::BuildModuleMenu( const ModuleType type, wxMen
                     case FileTreeData::ftdkProject:
                         menu->AppendSeparator();
                         menu->Append( idCodeFortranIndentProject, _( "Format Fortran Indent this project" ), _( "Format the Fortran source code Indent in this project" ) );
+                        menu->AppendSeparator();
                         break;
 
                     case FileTreeData::ftdkFile:
@@ -130,6 +178,18 @@ void Format_Fortran_Indent_Plugin::BuildModuleMenu( const ModuleType type, wxMen
         default:
             break;
     }
+}
+
+
+bool Format_Fortran_Indent_Plugin::BuildToolBar(wxToolBar* toolBar)
+{
+    //The application is offering its toolbar for your plugin,
+    //to add any toolbar items you want...
+    //Append any items you need on the toolbar...
+    NotImplemented(_T("Format_Fortran_Indent_Plugin::BuildToolBar()"));
+
+    // return true if you add toolbar items
+    return false;
 }
 
 
@@ -272,8 +332,6 @@ void Format_Fortran_Indent_Plugin::myCreateFortranRegEx( )
 {
 	int options = wxRE_DEFAULT | wxRE_ADVANCED | wxRE_ICASE ;
 
-	//pFortranRegEx = ( MyFortranRegEx * ) NULL;
-	//pFortranRegEx = new MyFortranRegEx;
 	myFortranRegEx.clear();
 	myFortranRegEx[wxT("regexEndProgram")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)((program)|(module)|(interface)|((block)(\\s*)(data))|(subroutine)|(function))((\\s+)([[:alnum:]_]+))?((\\s*)!(.*))?$"), options );
 	myFortranRegEx[wxT("regexProgram")] = new wxRegEx( wxT("^(\\s*)((program)|(module)|(interface))((\\s+)([[:alnum:]_]+))?((\\s*)!(.*))?$"), options );
@@ -450,6 +508,7 @@ void Format_Fortran_Indent_Plugin::getFortranIndentLine( MyFortranRegEx pFortran
         return ;
     }
 
+    // end only
     if ( pFortranRegEx[wxT("regexEndOnly")]->Matches( src ) )
     {
         indentNum -= 1;
