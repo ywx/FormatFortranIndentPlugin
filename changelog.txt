@@ -26,6 +26,11 @@ So it can add a submenu item "Format Fortran Intent Plugin" to "Fortran" Menu
 at "Code::Blocks IDE for Fortran"( after version 0.8rc2 ).
 (  Darius Markauskas<darmar.lt@gmail.com> Require )
 
+Version 0.1.2 2012-3-19
+=======================
+Add check for "&" ,But not complete test
+
+
 
 更新历史：
 ---------
@@ -51,3 +56,7 @@ v0.1.2b 2012-3-17
 改变 Plugin 类型，由 “Tool” 变为 “Generic”。
 
 这样可以在 “Code::Blocks IDE for Fortran” 0.8rc2以后版的 “Fortran” 菜单增加 “Format Fortran Intent Plugin” 子菜单项。(  Darius Markauskas<darmar.lt@gmail.com> 要求 )
+
+v0.1.2 2012-3-19
+================
+增加处理 & 续行,未测试

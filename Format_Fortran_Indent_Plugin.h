@@ -22,7 +22,41 @@
 # include <wx/hashmap.h>
 # include <wx/regex.h>
 
-#define Max_Line_Char 512
+//#define Max_Line_Char 512
+
+
+class IsMultiLines
+{
+public :
+	IsMultiLines()
+	{
+		isHaveMultiLines = false;
+		isFirstHaveMultiLines = false;
+		isEndHaveMultiLines = true;
+		iFirstLineNo = -1;
+		iEndLineNo = -1;
+	}
+
+	~IsMultiLines()
+	{
+	}
+
+    void reset()
+    {
+        isHaveMultiLines = false;
+		isFirstHaveMultiLines = false;
+		isEndHaveMultiLines = true;
+		iFirstLineNo = -1;
+		iEndLineNo = -1;
+    }
+
+	bool isHaveMultiLines;
+	bool isFirstHaveMultiLines;
+	bool isEndHaveMultiLines;
+	int iFirstLineNo;
+	int iEndLineNo;
+};
+
 
 //class Format_Fortran_Indent_Plugin : public cbToolPlugin
 class Format_Fortran_Indent_Plugin : public cbPlugin
@@ -154,7 +188,8 @@ protected:
 	MyFortranRegEx myFortranRegEx;
 
 	void myCreateFortranRegEx( );
-	void getFortranIndentLine( MyFortranRegEx pFortranRegEx, const wxString & src, int & indentNum, bool & isCur, bool & isCaseBegin );
+	bool BuffersDiffer( const wxString &a, const wxString &b, const wxString &eolChars );
+	void getFortranIndentLine( MyFortranRegEx pFortranRegEx, const wxString & src, int & indentNum, bool & isCur, bool & isCaseBegin, IsMultiLines & isMultiLines );
 
     DECLARE_EVENT_TABLE()
 };
