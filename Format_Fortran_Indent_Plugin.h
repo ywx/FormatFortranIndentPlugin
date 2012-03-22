@@ -189,7 +189,7 @@ protected:
 
 	void myCreateFortranRegEx( );
 	bool BuffersDiffer( const wxString &a, const wxString &b, const wxString &eolChars );
-	void getFortranIndentLine( MyFortranRegEx pFortranRegEx, const wxString & src, int & indentNum, bool & isCur, bool & isCaseBegin, IsMultiLines & isMultiLines );
+	void getFortranIndentLine( MyFortranRegEx pFortranRegEx, const wxString & src, int & indentNum, bool & isCur, bool & isCaseBegin );
 
     DECLARE_EVENT_TABLE()
 };
