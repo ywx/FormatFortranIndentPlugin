@@ -30,12 +30,19 @@ Version 0.1.2 2012-3-19
 =======================
 Add check for "&" ,But not complete test
 
-Version 0.1.2 2012-3-22
-=======================
+2012-3-22
+=========
 Refactor check for "&" ,But not complete test
 
 Update ( if, select, do, where ) support [label:] statement
 Add "contains" statement check
+Add "select type" statement check
+
+Version 0.1.2 2012-3-25
+=======================
+Refactor check for "&"
+
+class IsMultiLines not use isFirstHaveMultiLines， isEndHaveMultiLines
 
 
 
@@ -68,9 +75,16 @@ v0.1.2 2012-3-19
 ================
 增加处理 & 续行,未测试
 
-v 0.1.2 2012-3-22
-=================
+2012-3-22
+=========
 重构 & 续行 处理方式
 
 使（ if, select, do, where ) 支持 [label:]
 增加处理 "contains"
+增加处理 "select type"
+
+v0.1.2 2012-3-25
+================
+重构 & 续行 处理方式
+
+class IsMultiLines 不使用 isFirstHaveMultiLines， isEndHaveMultiLines

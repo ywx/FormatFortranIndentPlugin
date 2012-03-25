@@ -22,8 +22,6 @@
 # include <wx/hashmap.h>
 # include <wx/regex.h>
 
-//#define Max_Line_Char 512
-
 
 class IsMultiLines
 {
@@ -31,8 +29,6 @@ public :
 	IsMultiLines()
 	{
 		isHaveMultiLines = false;
-		isFirstHaveMultiLines = false;
-		isEndHaveMultiLines = true;
 		iFirstLineNo = -1;
 		iEndLineNo = -1;
 	}
@@ -44,15 +40,11 @@ public :
     void reset()
     {
         isHaveMultiLines = false;
-		isFirstHaveMultiLines = false;
-		isEndHaveMultiLines = true;
 		iFirstLineNo = -1;
 		iEndLineNo = -1;
     }
 
 	bool isHaveMultiLines;
-	bool isFirstHaveMultiLines;
-	bool isEndHaveMultiLines;
 	int iFirstLineNo;
 	int iEndLineNo;
 };
