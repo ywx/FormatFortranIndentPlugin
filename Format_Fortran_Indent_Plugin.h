@@ -179,7 +179,12 @@ protected:
 	WX_DECLARE_STRING_HASH_MAP( wxRegEx *, MyFortranRegEx );
 	MyFortranRegEx myFortranRegEx;
 
+    bool isFortranFilename( const wxFileName fname );
+    bool isFortranFilename( const wxString & filename );
+
 	void myCreateFortranRegEx( );
+	void myDelFortranRegEx();
+
 	bool BuffersDiffer( const wxString &a, const wxString &b, const wxString &eolChars );
 	void getFortranIndentLine( MyFortranRegEx pFortranRegEx, const wxString & src, int & indentNum, bool & isCur, bool & isCaseBegin );
 

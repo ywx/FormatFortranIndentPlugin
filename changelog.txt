@@ -38,11 +38,19 @@ Update ( if, select, do, where ) support [label:] statement
 Add "contains" statement check
 Add "select type" statement check
 
-Version 0.1.2 2012-3-25
-=======================
-Refactor check for "&"
+0.1.2 2012-3-25
+===============
+Refactor check for "&", But not complete test
 
-class IsMultiLines not use isFirstHaveMultiLines， isEndHaveMultiLines
+class IsMultiLines not use isFirstHaveMultiLines，isEndHaveMultiLines
+
+Version 0.1.2 2012-3-26
+=======================
+Fix bug in check for "&" commited by 2012-3-25
+
+Add tmpMultiLines.Empty(); in check for "&"
+Add myDelFortranRegEx() to release the memory of myFortranRegEx
+Update ~Format_Fortran_Indent_Plugin() prevent memory leaks
 
 
 
@@ -83,8 +91,16 @@ v0.1.2 2012-3-19
 增加处理 "contains"
 增加处理 "select type"
 
-v0.1.2 2012-3-25
-================
-重构 & 续行 处理方式
+2012-3-25
+=========
+重构 & 续行 处理方式,未测试
 
-class IsMultiLines 不使用 isFirstHaveMultiLines， isEndHaveMultiLines
+class IsMultiLines 不使用 isFirstHaveMultiLines，isEndHaveMultiLines
+
+v0.1.2 2012-3-26
+================
+修复 2012-3-25 提交的 & 续行 处理 Bug
+
+在 & 续行 处理中，增加 tmpMultiLines.Empty();
+增加 myDelFortranRegEx() 释放 myFortranRegEx 分配的内存
+更新 ~Format_Fortran_Indent_Plugin() 防止内存泄漏
