@@ -1,34 +1,25 @@
 ﻿ChangeLog for Format Fortran Indent Plugin
 ------------------------------------------
 
-Version 0.1 2011-12-25
-======================
-Init project for Format Fortran Indent Plugin.
-Create GitHub repository. https://github.com/ywx/FormatFortranIndentPlugin
-
-Version 0.1.1b 2012-3-11
-========================
-Fix the bug reported by Darius Markauskas<darmar.lt@gmail.com>.
-Add Readme.txt and Changelog.txt.
-
-Version 0.1.1 2012-3-12
-========================
-Add do while ()
-Update type
-Add where construct not test
-Add FormatFortranIntentPlugin_linux.cbp not test( Provide by Darius Markauskas<darmar.lt@gmail.com> )
-
-Version 0.1.2b 2012-3-17
-========================
-Change Plugin Type from "Tool" to "Generic".
-
-So it can add a submenu item "Format Fortran Intent Plugin" to "Fortran" Menu
-at "Code::Blocks IDE for Fortran"( after version 0.8rc2 ).
-(  Darius Markauskas<darmar.lt@gmail.com> Require )
-
-Version 0.1.2 2012-3-19
+Version 0.1.2 2012-4-10
 =======================
-Add check for "&" ,But not complete test
+Fix bug on marking bookmark in onlyselect mode
+
+Using wxArray instead of std::vector
+
+2012-3-26
+=========
+Fix bug in check for "&" commited by 2012-3-25
+
+Add tmpMultiLines.Empty(); in check for "&"
+Add myDelFortranRegEx() to release the memory of myFortranRegEx
+Update ~Format_Fortran_Indent_Plugin() prevent memory leaks
+
+2012-3-25
+=========
+Refactor check for "&", But not complete test
+
+class IsMultiLines not use isFirstHaveMultiLines，isEndHaveMultiLines
 
 2012-3-22
 =========
@@ -38,50 +29,59 @@ Update ( if, select, do, where ) support [label:] statement
 Add "contains" statement check
 Add "select type" statement check
 
-0.1.2 2012-3-25
-===============
-Refactor check for "&", But not complete test
-
-class IsMultiLines not use isFirstHaveMultiLines，isEndHaveMultiLines
-
-Version 0.1.2 2012-3-26
+Version 0.1.2 2012-3-19
 =======================
-Fix bug in check for "&" commited by 2012-3-25
+Add check for "&" ,But not complete test
 
-Add tmpMultiLines.Empty(); in check for "&"
-Add myDelFortranRegEx() to release the memory of myFortranRegEx
-Update ~Format_Fortran_Indent_Plugin() prevent memory leaks
+Version 0.1.2b 2012-3-17
+========================
+Change Plugin Type from "Tool" to "Generic".
+
+So it can add a submenu item "Format Fortran Intent Plugin" to "Fortran" Menu
+at "Code::Blocks IDE for Fortran"( after version 0.8rc2 ).
+(  Darius Markauskas<darmar.lt@gmail.com> Require )
+
+Version 0.1.1 2012-3-12
+========================
+Add do while ()
+Update type
+Add where construct not test
+Add FormatFortranIntentPlugin_linux.cbp not test( Provide by Darius Markauskas<darmar.lt@gmail.com> )
+
+Version 0.1.1b 2012-3-11
+========================
+Fix the bug reported by Darius Markauskas<darmar.lt@gmail.com>.
+Add Readme.txt and Changelog.txt.
+
+Version 0.1 2011-12-25
+======================
+Init project for Format Fortran Indent Plugin.
+Create GitHub repository. https://github.com/ywx/FormatFortranIndentPlugin
 
 
 
 更新历史：
 ---------
 
-v0.1 2011-12-25
-===============
-初始化项目代码，并上传到 https://github.com/ywx/FormatFortranIndentPlugin
-
-v0.1.1b 2012-3-11
-=================
-修复 Darius Markauskas<darmar.lt@gmail.com> 报告的 Bug。只能说是忽悠他一下，提高了代码的适应能力，仅此而已。毕竟人家把此插件放到了 Code::Blocks IDE for Fortran 预发行版中。
-增加 Readme.txt 和 Changelog.txt
-
-v0.1.1 2012-3-12
-=================
-增加处理 do while ()
-更新处理 type
-增加处理 where construct 未测试
-增加配置 FormatFortranIntentPlugin_linux.cbp 未测试( 由 Darius Markauskas<darmar.lt@gmail.com> 提供)
-
-v0.1.2b 2012-3-17
-=================
-改变 Plugin 类型，由 “Tool” 变为 “Generic”。
-
-这样可以在 “Code::Blocks IDE for Fortran” 0.8rc2以后版的 “Fortran” 菜单增加 “Format Fortran Intent Plugin” 子菜单项。(  Darius Markauskas<darmar.lt@gmail.com> 要求 )
-
-v0.1.2 2012-3-19
+v0.1.2 2012-4-10
 ================
-增加处理 & 续行,未测试
+修复 在选取模式下 Bookmark 的标记错误
+
+用 wxArray 取代 std::vector
+
+2012-3-26
+=========
+修复 2012-3-25 提交的 & 续行 处理 Bug
+
+在 & 续行 处理中，增加 tmpMultiLines.Empty();
+增加 myDelFortranRegEx() 释放 myFortranRegEx 分配的内存
+更新 ~Format_Fortran_Indent_Plugin() 防止内存泄漏
+
+2012-3-25
+=========
+重构 & 续行 处理方式,未测试
+
+class IsMultiLines 不使用 isFirstHaveMultiLines，isEndHaveMultiLines
 
 2012-3-22
 =========
@@ -91,16 +91,28 @@ v0.1.2 2012-3-19
 增加处理 "contains"
 增加处理 "select type"
 
-2012-3-25
-=========
-重构 & 续行 处理方式,未测试
-
-class IsMultiLines 不使用 isFirstHaveMultiLines，isEndHaveMultiLines
-
-v0.1.2 2012-3-26
+v0.1.2 2012-3-19
 ================
-修复 2012-3-25 提交的 & 续行 处理 Bug
+增加处理 & 续行,未测试
 
-在 & 续行 处理中，增加 tmpMultiLines.Empty();
-增加 myDelFortranRegEx() 释放 myFortranRegEx 分配的内存
-更新 ~Format_Fortran_Indent_Plugin() 防止内存泄漏
+v0.1.2b 2012-3-17
+=================
+改变 Plugin 类型，由 “Tool” 变为 “Generic”。
+
+这样可以在 “Code::Blocks IDE for Fortran” 0.8rc2以后版的 “Fortran” 菜单增加 “Format Fortran Intent Plugin” 子菜单项。(  Darius Markauskas<darmar.lt@gmail.com> 要求 )
+
+v0.1.1 2012-3-12
+=================
+增加处理 do while ()
+更新处理 type
+增加处理 where construct 未测试
+增加配置 FormatFortranIntentPlugin_linux.cbp 未测试( 由 Darius Markauskas<darmar.lt@gmail.com> 提供)
+
+v0.1.1b 2012-3-11
+=================
+修复 Darius Markauskas<darmar.lt@gmail.com> 报告的 Bug。只能说是忽悠他一下，提高了代码的适应能力，仅此而已。毕竟人家把此插件放到了 Code::Blocks IDE for Fortran 预发行版中。
+增加 Readme.txt 和 Changelog.txt
+
+v0.1 2011-12-25
+===============
+初始化项目代码，并上传到 https://github.com/ywx/FormatFortranIndentPlugin

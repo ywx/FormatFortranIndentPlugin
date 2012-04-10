@@ -22,6 +22,9 @@
 #include <cbeditor.h>
 
 //#include <wx/regex.h>
+#include <wx/dynarray.h>
+
+WX_DEFINE_ARRAY_INT(int, intArray);
 
 
 namespace
@@ -687,7 +690,7 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
     wxString tmpLine;
     wxString tmpMultiLines;
     //int tmpn = nLines - 1;
-    int tmpn = indexLineEnd - 1;
+    const int tmpn = indexLineEnd - 1;
 
     wxString indentStr;
     if( control->GetUseTabs() )
@@ -699,8 +702,11 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
     bool isTrimLineFromRight = false;
 
     int lineCounter = 0;
-    std::vector<int> new_bookmark;
-    std::vector<int> ed_breakpoints;
+    //std::vector<int> new_bookmark;
+    //std::vector<int> ed_breakpoints;
+    /// WX_DEFINE_ARRAY_INT(int, intArray);
+    intArray new_bookmark_array;
+    intArray ed_breakpoints_array;
 
 
     wxSetCursor(*wxHOURGLASS_CURSOR);
@@ -710,9 +716,15 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
     for( int i = indexLineStart; i < indexLineEnd; ++i )
     {
         if (ed->HasBookmark(i))
-            new_bookmark.push_back(i);
+        {
+            //new_bookmark.push_back(i);
+            new_bookmark_array.Add( i );
+        }
         if (ed->HasBreakpoint(i))
-            ed_breakpoints.push_back(i);
+        {
+            //ed_breakpoints.push_back(i);
+            ed_breakpoints_array.Add( i );
+        }
 
         isCur = true;
         tmpLine = control->GetLine( i ).Trim(false); // trim from left
@@ -896,23 +908,38 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
     if ( changed )
     {
         control->BeginUndoAction();
-        if (!onlySelected)
+        if (onlySelected)
         {
-            control->SetText(formattedText);
-
-            for (std::vector<int>::const_iterator i = new_bookmark.begin(); i != new_bookmark.end(); ++i)
+            control->ReplaceSelection(formattedText);
+            if( 0 < new_bookmark_array.GetCount() )
             {
-                ed->ToggleBookmark(*i);
-            }
-
-            for (std::vector<int>::const_iterator i = ed_breakpoints.begin(); i != ed_breakpoints.end(); ++i)
-            {
-                ed->ToggleBreakpoint(*i);
+                ed->ToggleBookmark( tmpn );
             }
         }
         else
         {
-            control->ReplaceSelection(formattedText);
+            control->SetText(formattedText);
+        }
+
+        size_t iCount = new_bookmark_array.GetCount();
+        //for (std::vector<int>::const_iterator i = new_bookmark.begin(); i != new_bookmark.end(); ++i)
+        //{
+        //    ed->ToggleBookmark(*i);
+        //}
+        for( size_t i = 0; i < iCount; ++i )
+        {
+            ed->ToggleBookmark( new_bookmark_array[i] ); // new_bookmark_array.Item(i)
+        }
+
+        iCount = 0;
+        iCount = ed_breakpoints_array.GetCount();
+        //for (std::vector<int>::const_iterator i = ed_breakpoints.begin(); i != ed_breakpoints.end(); ++i)
+        //{
+        //    ed->ToggleBreakpoint(*i);
+        //}
+        for( size_t i = 0; i < iCount; ++i )
+        {
+            ed->ToggleBreakpoint( ed_breakpoints_array[i] ); // ed_breakpoints_array.Item(i)
         }
 
         control->EndUndoAction();
@@ -921,6 +948,9 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
     }
 
     wxSetCursor(wxNullCursor);
+
+    new_bookmark_array.Clear();
+    ed_breakpoints_array.Clear();
 
     return changed;
 }
