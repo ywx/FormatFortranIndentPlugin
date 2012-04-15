@@ -1,8 +1,12 @@
 ﻿ChangeLog for Format Fortran Indent Plugin
 ------------------------------------------
 
-Version 0.1.2 2012-4-10
+Version 0.1.2 2012-4-15
 =======================
+Refactor getFortranIndentLine()
+
+2012-4-10
+=========
 Fix bug on marking bookmark in onlyselect mode
 
 Using wxArray instead of std::vector
@@ -63,8 +67,12 @@ Create GitHub repository. https://github.com/ywx/FormatFortranIndentPlugin
 更新历史：
 ---------
 
-v0.1.2 2012-4-10
-================
+v0.1.2 2012-4-15
+=======================
+重构 getFortranIndentLine()
+
+2012-4-10
+=========
 修复 在选取模式下 Bookmark 的标记错误
 
 用 wxArray 取代 std::vector

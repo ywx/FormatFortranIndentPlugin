@@ -353,13 +353,11 @@ void Format_Fortran_Indent_Plugin::myCreateFortranRegEx( )
 {
 	int options = wxRE_DEFAULT | wxRE_ADVANCED | wxRE_ICASE ;
 
-	//myFortranRegEx.clear();
 	myDelFortranRegEx();
 
 	myFortranRegEx[wxT("regexMultiLines")] = new wxRegEx( wxT("(&)((\r\n)|(\r)|(\n))?$"), options );
-	myFortranRegEx[wxT("regexEndProgram")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)((program)|(module)|(interface)|((block)(\\s+)(data))|(subroutine)|(function))((\\s+)([[:alnum:]_]+))?((\\s*)!(.*))?$"), options );
+	myFortranRegEx[wxT("regexEndProgram")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)((program)|(module)|(interface)|((block)(\\s+)(data))|(subroutine)|(function))((\\s+)([[:alnum:]_]+))?((\\s*)!(.*))?(\\s*)$"), options );
 	myFortranRegEx[wxT("regexProgram")] = new wxRegEx( wxT("^(\\s*)((program)|(module)|(interface)|((block)(\\s+)(data)))((\\s+)([[:alnum:]_]+))?((\\s*)!(.*))?(\\s*)$"), options );
-	//myFortranRegEx[wxT("regexBlock")] = new wxRegEx( wxT("^(\\s*)(((block)(\\s+)(data))((\\s+)([[:alnum:]_]+))?)(\\s*)"), options );
 	myFortranRegEx[wxT("regexContains")] = new wxRegEx( wxT("^(\\s*)(contains)((\\s*)!(.*))?(\\s*)$"), options );
 	myFortranRegEx[wxT("regexSubroutine")] = new wxRegEx( wxT("^(\\s*)((pure)(\\s+))?((recursive)(\\s+))?((elemental)(\\s+))?(subroutine)(\\s+)([[:alnum:]_]+)((\\s*)(\\()(\\s*)(([[:alnum:]_]+)((\\s*)(,)(\\s*)([[:alnum:]_]+))*)?(\\s*)(\\))(\\s*))?"), options );
 	myFortranRegEx[wxT("regexFunction")] = new wxRegEx( wxT("^(\\s*)((pure)(\\s+))?(((recursive)(\\s+))?((elemental)(\\s+))?(((((integer)|(real)|(complex)|(logical)|(character))((\\()(\\s*)((len)(\\s*)(=)(\\s*))?(\\d*)(\\s*)(\\)))?)|(type))(\\s*))?(function))((\\s+)([[:alnum:]_]+)(\\s*)(\\()(\\s*)(.*)(\\s*)(\\)))(\\s*)"), options );
@@ -387,7 +385,7 @@ void Format_Fortran_Indent_Plugin::myCreateFortranRegEx( )
 }
 
 
-void Format_Fortran_Indent_Plugin::getFortranIndentLine( MyFortranRegEx pFortranRegEx, const wxString & src1, int & indentNum, bool & isCur, bool & isCaseBegin )
+void Format_Fortran_Indent_Plugin::getFortranIndentLine( const wxString & src1, int & indentNum, bool & isCur, bool & isCaseBegin )
 {
     // module program subroutine function forall
     // Add a shiftwidth to statements following module, program, subroutine,
@@ -397,74 +395,66 @@ void Format_Fortran_Indent_Plugin::getFortranIndentLine( MyFortranRegEx pFortran
     wxString srct = src1;
     wxString src = srct.Trim(true); // trim from right
 
-    if ( pFortranRegEx[wxT("regexEndProgram")]->Matches( src ) )
+    // Program, Module, Interface, Bblock Data, Subroutine, Function
+    if ( myFortranRegEx[wxT("regexEndProgram")]->Matches( src ) )
     {
         indentNum -= 1;
         isCur = true;
-		//msg = wxT("Match (end program)    ");
         return ;
     }
 
-    if ( pFortranRegEx[wxT("regexProgram")]->Matches( src ) ||
-            //pFortranRegEx[wxT("regexBlock")]->Matches( src ) ||
-            pFortranRegEx[wxT("regexSubroutine")]->Matches( src ) ||
-            pFortranRegEx[wxT("regexFunction")]->Matches( src ) )
+	if ( myFortranRegEx[wxT("regexProgram")]->Matches( src ) ||
+            myFortranRegEx[wxT("regexSubroutine")]->Matches( src ) ||
+            myFortranRegEx[wxT("regexFunction")]->Matches( src ) )
     {
         indentNum += 1;
         isCur = false;
-		//msg = wxT("Match (program)    ");
         return ;
     }
-    // Module Contains
-    if ( pFortranRegEx[wxT("regexContains")]->Matches( src ) )
+    // Contains
+    if ( myFortranRegEx[wxT("regexContains")]->Matches( src ) )
     {
         isCur = false;
-		//msg = wxT("Match (contains)    ");
         return ;
     }
 
     // type
-    if ( pFortranRegEx[wxT("regexEndType")]->Matches( src ) )
+    if ( myFortranRegEx[wxT("regexEndType")]->Matches( src ) )
     {
         indentNum -= 1;
         isCur = true;
-		//msg = wxT("Match (end type)    ");
         return ;
     }
 
-    if ( ( ! pFortranRegEx[wxT("regexType")]->Matches( src ) ) &&
-            ( pFortranRegEx[wxT("regexTypeDefine")]->Matches( src ) ) )
+    if ( ( false == myFortranRegEx[wxT("regexType")]->Matches( src ) ) &&
+            ( myFortranRegEx[wxT("regexTypeDefine")]->Matches( src ) ) )
     {
         indentNum += 1;
         isCur = false;
-		//msg = wxT("Match (type)    ");
         return ;
     }
 
     // do while # end do
     // forall() # end forall
     // Indent do loops only if they are all guaranteed to be of do/end do type
-    if ( pFortranRegEx[wxT("regexEndDo")]->Matches( src ) )
+    if ( myFortranRegEx[wxT("regexEndDo")]->Matches( src ) )
     {
         indentNum -= 1;
         isCur = true;
-		//msg = wxT("Match (end do)    ");
         return ;
     }
 
-    if ( pFortranRegEx[wxT("regexDo")]->Matches( src ) )
+    if ( myFortranRegEx[wxT("regexDo")]->Matches( src ) )
     {
         indentNum += 1;
         isCur = false;
-		//msg = wxT("Match (do)    ");
         return ;
     }
 
-    if ( pFortranRegEx[wxT("regexForall")]->Matches( src ) )
+    if ( myFortranRegEx[wxT("regexForall")]->Matches( src ) )
     {
         indentNum += 1;
         isCur = false;
-		//msg = wxT("Match (forall)    ");
         return ;
     }
 
@@ -473,24 +463,22 @@ void Format_Fortran_Indent_Plugin::getFortranIndentLine( MyFortranRegEx pFortran
     // where, elsewhere, type and interface statements
 
     // select case # case | case dafault # end select
-    if ( pFortranRegEx[wxT("regexEndSelect")]->Matches( src ) )
+    if ( myFortranRegEx[wxT("regexEndSelect")]->Matches( src ) )
     {
         indentNum -= 2;
         isCur = true;
-		//msg = wxT("Match (end select)    ");
         return ;
     }
 
-    if ( pFortranRegEx[wxT("regexSelectCase")]->Matches( src ) )
+    if ( myFortranRegEx[wxT("regexSelectCase")]->Matches( src ) )
     {
         indentNum += 1;
         isCur = false;
         isCaseBegin = true;
-		//msg = wxT("Match (select case)    ");
         return ;
     }
 
-    if ( pFortranRegEx[wxT("regexCase")]->Matches( src ) )
+    if ( myFortranRegEx[wxT("regexCase")]->Matches( src ) )
     {
         if( true == isCaseBegin )
         {
@@ -498,60 +486,52 @@ void Format_Fortran_Indent_Plugin::getFortranIndentLine( MyFortranRegEx pFortran
             isCaseBegin = false;
         }
         isCur = false;
-		//msg = wxT("Match (case)    ");
         return ;
     }
 
     // if ## if then # else # end if
-    if ( pFortranRegEx[wxT("regexIfThen")]->Matches( src ) )
+    if ( myFortranRegEx[wxT("regexIfThen")]->Matches( src ) )
     {
         indentNum += 1;
         isCur = false;
-		//msg = wxT("Match (if then)    ");
         return ;
     }
-    if ( pFortranRegEx[wxT("regexElse")]->Matches( src ) )
+    if ( myFortranRegEx[wxT("regexElse")]->Matches( src ) )
     {
         isCur = false;
-		//msg = wxT("Match (else)    ");
         return ;
     }
-    if ( pFortranRegEx[wxT("regexEndIf")]->Matches( src ) )
+    if ( myFortranRegEx[wxT("regexEndIf")]->Matches( src ) )
     {
         indentNum -= 1;
         isCur = true;
-		//msg = wxT("Match (end if)    ");
         return ;
     }
 
     // where elsewhere
-    if ( pFortranRegEx[wxT("regexWhere")]->Matches( src ) )
+    if ( myFortranRegEx[wxT("regexWhere")]->Matches( src ) )
     {
         indentNum += 1;
         isCur = false;
-		//msg = wxT("Match (where)    ");
         return ;
     }
-    if ( pFortranRegEx[wxT("regexElseWhere")]->Matches( src ) )
+    if ( myFortranRegEx[wxT("regexElseWhere")]->Matches( src ) )
     {
         isCur = false;
-		//msg = wxT("Match (elsewhere)    ");
         return ;
     }
-    if ( pFortranRegEx[wxT("regexEndWhere")]->Matches( src ) )
+    if ( myFortranRegEx[wxT("regexEndWhere")]->Matches( src ) )
     {
         indentNum -= 1;
         isCur = true;
-		//msg = wxT("Match (end where)    ");
         return ;
     }
 
     // end only
-    if ( pFortranRegEx[wxT("regexEndOnly")]->Matches( src ) )
+    if ( myFortranRegEx[wxT("regexEndOnly")]->Matches( src ) )
     {
         indentNum -= 1;
         isCur = true;
-		//msg = wxT("Match (end only)    ");
         return ;
     }
 
@@ -559,9 +539,7 @@ void Format_Fortran_Indent_Plugin::getFortranIndentLine( MyFortranRegEx pFortran
 
 // Special code to compare strings which doesn't care
 // about spaces leading up to the EOL.
-//static bool BuffersDiffer( const wxString &a, const wxString &b, const wxString &eolChars )
 bool Format_Fortran_Indent_Plugin::BuffersDiffer( const wxString &a, const wxString &b, const wxString &eolChars )
-//static bool BuffersDiffer( const wxString &a, const wxString &b )
 {
     wxString ta = a;
     wxString tb = b;
@@ -569,21 +547,10 @@ bool Format_Fortran_Indent_Plugin::BuffersDiffer( const wxString &a, const wxStr
     ta.Trim(); //ta.Trim(true) from right
     tb.Trim();
 
-    //wxRegEx re;
-    //int options = wxRE_DEFAULT | wxRE_ADVANCED | wxRE_NEWLINE;
-    //wxString wx_pattern;
-    ////wx_pattern = wxT("([ \t]+)(") + eolChars + wxT(")");
-    //wx_pattern = wxT("([ \t]+)((\r\n)|(\r)|(\n))");
-
-    //if ( re.Compile( wx_pattern, options ) )
-    if( myFortranRegEx[wxT("regexBlankLine")] )
+    wxASSERT( 0 != myFortranRegEx[wxT("regexBlankLine") ] );
     {
-        //re.ReplaceAll( &ta, eolChars );
         myFortranRegEx[wxT("regexBlankLine")]->ReplaceAll( &ta, eolChars );
-        ////re.ReplaceAll( &ta, wxT("\n") );
-        //re.ReplaceAll( &tb, eolChars );
         myFortranRegEx[wxT("regexBlankLine")]->ReplaceAll( &tb, eolChars );
-        ////re.ReplaceAll( &tb, wxT("\n") );
     }
 
     bool changed = false;
@@ -702,8 +669,6 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
     bool isTrimLineFromRight = false;
 
     int lineCounter = 0;
-    //std::vector<int> new_bookmark;
-    //std::vector<int> ed_breakpoints;
     /// WX_DEFINE_ARRAY_INT(int, intArray);
     intArray new_bookmark_array;
     intArray ed_breakpoints_array;
@@ -711,7 +676,7 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
 
     wxSetCursor(*wxHOURGLASS_CURSOR);
 
-    ///formattedText = edText;
+    ///formattedText
     //for( int i = 0; i < nLines; ++i )
     for( int i = indexLineStart; i < indexLineEnd; ++i )
     {
@@ -744,7 +709,7 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
                 tmpMultiLines.Empty();
             }
 
-            if( myFortranRegEx[wxT("regexMultiLines")] )
+            wxASSERT( myFortranRegEx[wxT("regexMultiLines")] );
             {
                 myFortranRegEx[wxT("regexMultiLines")]->ReplaceAll( &tempLine, wxT("") );
             }
@@ -757,20 +722,18 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
                 }
             }
 
-            if( myFortranRegEx[wxT("regexComment")] )
+            wxASSERT( myFortranRegEx[wxT("regexComment")] );
             {
                 myFortranRegEx[wxT("regexComment")]->ReplaceAll( &tempLine, wxT("") );
             }
 
             tmpMultiLines += tempLine;
 
-            //msg = wxT("Match (continue MultiLines)    ");
             continue ;
         }
 
         if( true ==  isMultiLines.isHaveMultiLines )
         {
-            //msg = wxT("Match (end of MultiLines)    ");
             //cbMessageBox( wxT("End of MultiLines !\n"), wxT("MultiLines Info"), wxICON_INFORMATION );
             //Manager::Get()->GetLogManager()->Log( _("End of MultiLines !") );
 
@@ -779,10 +742,10 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
             wxString tempLine;
             tempLine = tmpLine; // trim from left
 
-             if( myFortranRegEx[wxT("regexMultiLines")] )
-            {
-                myFortranRegEx[wxT("regexMultiLines")]->ReplaceAll( &tempLine, wxT("") );
-            }
+            //wxASSERT( myFortranRegEx[wxT("regexMultiLines")] );
+            //{
+            //    myFortranRegEx[wxT("regexMultiLines")]->ReplaceAll( &tempLine, wxT("") );
+            //}
 
             if( tempLine.Len() > 0 )
             {
@@ -792,16 +755,16 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
                 }
             }
 
-            if( myFortranRegEx[wxT("regexComment")] )
-            {
-                myFortranRegEx[wxT("regexComment")]->ReplaceAll( &tempLine, wxT("") );
-            }
+            //wxASSERT( myFortranRegEx[wxT("regexComment")] );
+            //{
+            //    myFortranRegEx[wxT("regexComment")]->ReplaceAll( &tempLine, wxT("") );
+            //}
 
             tmpMultiLines += tempLine;
 
             //cbMessageBox( wxString::Format(wxT("MultiLines( %d, %d ):\n"), isMultiLines.iFirstLineNo, isMultiLines.iEndLineNo )+tmpMultiLines,
             //	wxT("MultiLines Info"), wxICON_INFORMATION );
-            getFortranIndentLine( myFortranRegEx, tmpMultiLines, indentNum, isCur, isCaseBegin );
+            getFortranIndentLine( tmpMultiLines, indentNum, isCur, isCaseBegin );
 
             for( int j = isMultiLines.iFirstLineNo; j <= isMultiLines.iEndLineNo; ++j )
             {
@@ -872,7 +835,7 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
                     tmpLine.Trim(); //trim from right
                     tmpLine += eolChars;
                 }
-                getFortranIndentLine( myFortranRegEx, tmpLine, indentNum, isCur, isCaseBegin );
+                getFortranIndentLine( tmpLine, indentNum, isCur, isCaseBegin );
             }
 
             int tmpN = indentNum;
@@ -903,7 +866,6 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
     }
 
     bool changed = BuffersDiffer( formattedText, !onlySelected ? edText : selText, eolChars );
-    //bool changed = BuffersDiffer( formattedText, !onlySelected ? edText : selText );
 
     if ( changed )
     {
@@ -922,10 +884,6 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
         }
 
         size_t iCount = new_bookmark_array.GetCount();
-        //for (std::vector<int>::const_iterator i = new_bookmark.begin(); i != new_bookmark.end(); ++i)
-        //{
-        //    ed->ToggleBookmark(*i);
-        //}
         for( size_t i = 0; i < iCount; ++i )
         {
             ed->ToggleBookmark( new_bookmark_array[i] ); // new_bookmark_array.Item(i)
@@ -933,10 +891,6 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
 
         iCount = 0;
         iCount = ed_breakpoints_array.GetCount();
-        //for (std::vector<int>::const_iterator i = ed_breakpoints.begin(); i != ed_breakpoints.end(); ++i)
-        //{
-        //    ed->ToggleBreakpoint(*i);
-        //}
         for( size_t i = 0; i < iCount; ++i )
         {
             ed->ToggleBreakpoint( ed_breakpoints_array[i] ); // ed_breakpoints_array.Item(i)
