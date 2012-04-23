@@ -1,8 +1,14 @@
 ﻿ChangeLog for Format Fortran Indent Plugin
 ------------------------------------------
 
-Version 0.1.2 2012-4-15
+Version 0.1.2 2012-4-23
 =======================
+Restructure, Add Class CMyWxFortranIndent to Process Fortran Indent
+    
+Add CMyWxFortranIndent.h/.cpp
+
+2012-4-15
+=========
 Refactor getFortranIndentLine()
 
 2012-4-10
@@ -67,8 +73,14 @@ Create GitHub repository. https://github.com/ywx/FormatFortranIndentPlugin
 更新历史：
 ---------
 
-v0.1.2 2012-4-15
-=======================
+v0.1.2 2012-4-23
+================
+调整结构, 增加专用于处理 Fortran Indent 的 Class CMyWxFortranIndent
+    
+增加 CMyWxFortranIndent.h/.cpp
+
+2012-4-15
+=========
 重构 getFortranIndentLine()
 
 2012-4-10

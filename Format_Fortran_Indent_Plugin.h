@@ -3,7 +3,7 @@
  * Purpose:   declaration of Code::Blocks plugin Format_Fortran_Indent_Plugin
  * Author:    YWX (wxFortranIndent@163.com)
  * Created:   2011-12-22
- * Copyright: (c) 2011 YWX <wxFortranIndent@163.com>
+ * Copyright: (c) YWX <wxFortranIndent@163.com>
  * License:   GNU General Public License, version 3
  **************************************************************/
 
@@ -19,9 +19,7 @@
 
 #include <cbplugin.h> // for "class cbToolPlugin" // for "class cbPlugin"
 
-# include <wx/hashmap.h>
-# include <wx/regex.h>
-
+#include "CMyWxFortranIndent.h"
 
 class IsMultiLines
 {
@@ -176,17 +174,10 @@ protected:
     virtual void OnRelease(bool appShutDown);
 
     /// pre
-	WX_DECLARE_STRING_HASH_MAP( wxRegEx *, MyFortranRegEx );
-	MyFortranRegEx myFortranRegEx;
+	CMyWxFortranIndent myWxFortranIndent;
 
     bool isFortranFilename( const wxFileName fname );
     bool isFortranFilename( const wxString & filename );
-
-	void myCreateFortranRegEx( );
-	void myDelFortranRegEx();
-
-	bool BuffersDiffer( const wxString &a, const wxString &b, const wxString &eolChars );
-	void getFortranIndentLine( const wxString & src, int & indentNum, bool & isCur, bool & isCaseBegin );
 
     DECLARE_EVENT_TABLE()
 };
