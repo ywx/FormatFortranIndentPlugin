@@ -346,7 +346,6 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
     int end = control->GetSelectionEnd();
     int indexLineStart = 0, indexLineEnd = 0;
 
-    wxString fromWord;
     if (start != end)
     {
         onlySelected = true;
@@ -371,6 +370,7 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
     // load settings
     //FormatterSettings settings;
     //settings.ApplyTo(formatter);
+    CMyFortranIndentConfig myFortranIndentConfig;
 
     wxString eolChars;
 
@@ -427,13 +427,25 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
     const int tmpn = indexLineEnd - 1;
 
     wxString indentStr;
-    if( control->GetUseTabs() )
-        indentStr = wxT("\t");
+    if( myFortranIndentConfig.isSameAsEditor )
+    {
+        if( control->GetUseTabs() )
+            indentStr = wxT("\t");
+        else
+            indentStr = wxString(wxT(' '), control->GetTabWidth() );
+    }
     else
-        indentStr = wxString(wxT(' '), control->GetTabWidth() );
+    {
+        if( myFortranIndentConfig.isUseTab )
+            indentStr = wxT("\t");
+        else
+            indentStr = wxString(wxT(' '), myFortranIndentConfig.iTabWidth );
+    }
 
-    bool isOnlyBlankLine = false;
-    bool isTrimLineFromRight = false;
+    //bool isOnlyBlankLine = false;
+    //bool isTrimLineFromRight = false;
+    bool isOnlyBlankLine = myFortranIndentConfig.isKeepBlankLineOnly;
+    bool isTrimLineFromRight = myFortranIndentConfig.isTrimLineFromRight;
 
     int lineCounter = 0;
     /// WX_DEFINE_ARRAY_INT(int, intArray);

@@ -48,6 +48,31 @@ public :
 };
 
 
+
+struct CMyFortranIndentConfig
+{
+	bool isSameAsEditor;
+	bool isUseTab;
+	int  iTabWidth;
+	bool isKeepBlankLineOnly;
+	bool isTrimLineFromRight;
+
+	CMyFortranIndentConfig()
+	{
+		reset();
+	}
+
+	void reset()
+	{
+		isSameAsEditor = true;
+		isUseTab = false;
+		iTabWidth = 4;
+		isKeepBlankLineOnly = false;
+		isTrimLineFromRight = false;
+	}
+};
+
+
 //class Format_Fortran_Indent_Plugin : public cbToolPlugin
 class Format_Fortran_Indent_Plugin : public cbPlugin
 {

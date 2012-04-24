@@ -45,6 +45,8 @@
 				</ExtraCommands>
 			</Target>
 		</Build>
+		<Unit filename="CMyWxFortranIndent.cpp" />
+		<Unit filename="CMyWxFortranIndent.h" />
 		<Unit filename="Format_Fortran_Indent_Plugin.cpp" />
 		<Unit filename="Format_Fortran_Indent_Plugin.h" />
 		<Unit filename="manifest.xml" />
