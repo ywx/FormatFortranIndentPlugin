@@ -218,18 +218,21 @@ void CMyWxFortranIndent::getFortranIndentLine( const wxString & src1, int & inde
 
 // Special code to compare strings which doesn't care
 // about spaces leading up to the EOL.
-bool CMyWxFortranIndent::BuffersDiffer( const wxString &a, const wxString &b, const wxString &eolChars )
+bool CMyWxFortranIndent::BuffersDiffer( const wxString &a, const wxString &b, const wxString &eolChars, const bool isDelBlank )
 {
     wxString ta = a;
     wxString tb = b;
 
-    ta.Trim(); //ta.Trim(true) from right
-    tb.Trim();
-
-    wxASSERT( 0 != myFortranRegEx[wxT("regexBlankLine") ] );
+    if( isDelBlank )
     {
-        myFortranRegEx[wxT("regexBlankLine")]->ReplaceAll( &ta, eolChars );
-        myFortranRegEx[wxT("regexBlankLine")]->ReplaceAll( &tb, eolChars );
+        ta.Trim(); //ta.Trim(true) from right
+        tb.Trim();
+
+        wxASSERT( 0 != myFortranRegEx[wxT("regexBlankLine") ] );
+        {
+            myFortranRegEx[wxT("regexBlankLine")]->ReplaceAll( &ta, eolChars );
+            myFortranRegEx[wxT("regexBlankLine")]->ReplaceAll( &tb, eolChars );
+        }
     }
 
     bool changed = false;

@@ -36,7 +36,7 @@ public:
 	void myCreateFortranRegEx();
 	void myDelFortranRegEx();
 
-	bool BuffersDiffer( const wxString &a, const wxString &b, const wxString &eolChars );
+	bool BuffersDiffer( const wxString &a, const wxString &b, const wxString &eolChars,const bool isDelBlank=true );
 	bool getIsHasLineContinuation( const wxString & srcLine );
 	void delLineContinuation( wxString & srcLine );
 	void delComment( wxString & srcLine );

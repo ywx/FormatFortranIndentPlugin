@@ -40,15 +40,20 @@
 					<Add directory="$(#wx.lib)\gcc_dll" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="zip -j9 Format_Fortran_Indent_Plugin.zip manifest.xml" />
-					<Add after="zip -j9 Format_Fortran_Indent_Plugin.cbplugin Format_Fortran_Indent_Plugin.dll Format_Fortran_Indent_Plugin.zip" />
+					<Add after="zip -j9 Format_Fortran_Indent_Plugin.zip manifest.xml Format_Fortran_Indent_Plugin.xrc" />
+					<Add after="zip -j9 Format_Fortran_Indent_Plugin.cbplugin Format_Fortran_Indent_Plugin.dll Format_Fortran_Indent_Plugin.zip Format_Fortran_Indent_Plugin.png Format_Fortran_Indent_Plugin-off.png" />
 				</ExtraCommands>
 			</Target>
 		</Build>
+		<Unit filename="CFortranIndentConfigDlg.cpp" />
+		<Unit filename="CFortranIndentConfigDlg.h" />
 		<Unit filename="CMyWxFortranIndent.cpp" />
 		<Unit filename="CMyWxFortranIndent.h" />
+		<Unit filename="Format_Fortran_Indent_Plugin-off.png" />
 		<Unit filename="Format_Fortran_Indent_Plugin.cpp" />
 		<Unit filename="Format_Fortran_Indent_Plugin.h" />
+		<Unit filename="Format_Fortran_Indent_Plugin.png" />
+		<Unit filename="Format_Fortran_Indent_Plugin.xrc" />
 		<Unit filename="manifest.xml" />
 		<Extensions>
 			<code_completion />

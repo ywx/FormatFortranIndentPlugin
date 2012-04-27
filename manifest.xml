@@ -3,7 +3,7 @@
     <SdkVersion major="1" minor="11"  release="15" />
     <Plugin name="Format_Fortran_Indent_Plugin">
         <Value title="Format Fortran Indent Plugin" />
-        <Value version="0.1.2" />
+        <Value version="0.2" />
         <Value description="Code::Blocks Plugin to Format Source Code Indent in Fortran 95, Fortran 90 Source Code (free source form)" />
         <Value author="YWX" />
         <Value authorEmail="wxFortranIndent@163.com" />

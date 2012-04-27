@@ -11,6 +11,7 @@
 #include <sdk.h> // Code::Blocks SDK
 #include <configurationpanel.h>
 #include "Format_Fortran_Indent_Plugin.h"
+#include "CFortranIndentConfigDlg.h"
 
 #include <wx/progdlg.h>
 #include "cbstyledtextctrl.h"
@@ -84,17 +85,25 @@ void Format_Fortran_Indent_Plugin::OnRelease(bool appShutDown)
 int Format_Fortran_Indent_Plugin::Configure()
 {
     //create and display the configuration dialog for your plugin
-    cbConfigurationDialog dlg(Manager::Get()->GetAppWindow(), wxID_ANY, _("Your dialog title"));
-    cbConfigurationPanel* panel = GetConfigurationPanel(&dlg);
-    if (panel)
-    {
-        dlg.AttachConfigurationPanel(panel);
-        PlaceWindow(&dlg);
-        return dlg.ShowModal() == wxID_OK ? 0 : -1;
-    }
-    return -1;
+    //cbConfigurationDialog dlg(Manager::Get()->GetAppWindow(), wxID_ANY, _("Your dialog title"));
+    //cbConfigurationPanel* panel = GetConfigurationPanel(&dlg);
+    //if (panel)
+    //{
+    //    dlg.AttachConfigurationPanel(panel);
+    //    PlaceWindow(&dlg);
+    //    return dlg.ShowModal() == wxID_OK ? 0 : -1;
+    //}
+    //return -1;
+    return 0;
 }
 
+cbConfigurationPanel* Format_Fortran_Indent_Plugin::GetConfigurationPanel(wxWindow* parent)
+{
+    CFortranIndentConfigDlg* dlg = new CFortranIndentConfigDlg(parent);
+    // deleted by the caller
+
+    return dlg;
+}
 
 void Format_Fortran_Indent_Plugin::BuildMenu(wxMenuBar* menuBar)
 {
@@ -368,9 +377,18 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
     wxString formattedText;
 
     // load settings
-    //FormatterSettings settings;
-    //settings.ApplyTo(formatter);
     CMyFortranIndentConfig myFortranIndentConfig;
+
+	ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("fortran_indent"));
+	wxASSERT( 0 != cfg );
+
+	if( cfg->Read( _T("is_SameAsEditor"), & myFortranIndentConfig.isSameAsEditor ) )
+	{
+		cfg->Read( _T("is_UseTab"), & myFortranIndentConfig.isUseTab );
+		cfg->Read( _T("i_TabWidth"), & myFortranIndentConfig.iTabWidth );
+		cfg->Read( _T("is_KeepBlankLineOnly"), & myFortranIndentConfig.isKeepBlankLineOnly );
+		cfg->Read( _T("is_TrimLineFromRight"), & myFortranIndentConfig.isTrimLineFromRight );
+	}
 
     wxString eolChars;
 
@@ -389,13 +407,8 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
             break;
     }
 
-    //if (edText.size() && edText.Last() != _T('\r') && edText.Last() != _T('\n') && !onlySelected)
-    //    edText += eolChars;
-
     bool isRemoveSelEOL = false;
     int nLines = control->GetLineCount();
-    //cbMessageBox(wxT("This is my Plugin test Message Dialog\n")+ed->GetFilename()+
-    //            wxString::Format(wxT(" : has line = %d"), nLines ), _("File Info"), wxICON_INFORMATION );
     int indentNum = 0;
     wxString firstLineIndentStr;
     if (!onlySelected)
@@ -423,7 +436,6 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
 	isMultiLines.reset();
     wxString tmpLine;
     wxString tmpMultiLines;
-    //int tmpn = nLines - 1;
     const int tmpn = indexLineEnd - 1;
 
     wxString indentStr;
@@ -442,8 +454,6 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
             indentStr = wxString(wxT(' '), myFortranIndentConfig.iTabWidth );
     }
 
-    //bool isOnlyBlankLine = false;
-    //bool isTrimLineFromRight = false;
     bool isOnlyBlankLine = myFortranIndentConfig.isKeepBlankLineOnly;
     bool isTrimLineFromRight = myFortranIndentConfig.isTrimLineFromRight;
 
@@ -456,7 +466,6 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
     wxSetCursor(*wxHOURGLASS_CURSOR);
 
     ///formattedText
-    //for( int i = 0; i < nLines; ++i )
     for( int i = indexLineStart; i < indexLineEnd; ++i )
     {
         if (ed->HasBookmark(i))
@@ -474,8 +483,6 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
 
         if( myWxFortranIndent.getIsHasLineContinuation( tmpLine ) )
         {
-            //cbMessageBox( wxT("Find MultiLines !\n"), wxT("MultiLines Info"), wxICON_INFORMATION );
-            //Manager::Get()->GetLogManager()->Log( _("Find MultiLines !") );
             wxString tempLine;
             tempLine = tmpLine; // trim from left
 
@@ -505,9 +512,6 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
 
         if( true ==  isMultiLines.isHaveMultiLines )
         {
-            //cbMessageBox( wxT("End of MultiLines !\n"), wxT("MultiLines Info"), wxICON_INFORMATION );
-            //Manager::Get()->GetLogManager()->Log( _("End of MultiLines !") );
-
             isMultiLines.iEndLineNo = i;
 
             wxString tempLine;
@@ -523,8 +527,6 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
 
             tmpMultiLines += tempLine;
 
-            //cbMessageBox( wxString::Format(wxT("MultiLines( %d, %d ):\n"), isMultiLines.iFirstLineNo, isMultiLines.iEndLineNo )+tmpMultiLines,
-            //	wxT("MultiLines Info"), wxICON_INFORMATION );
             myWxFortranIndent.getFortranIndentLine( tmpMultiLines, indentNum, isCur, isCaseBegin );
 
             for( int j = isMultiLines.iFirstLineNo; j <= isMultiLines.iEndLineNo; ++j )
@@ -548,7 +550,10 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
                     if( isTrimLineFromRight )
                     {
                         tempLine.Trim(); //trim from right
-                        tempLine += eolChars;
+                        if( j < tmpn )
+                        {
+                            tempLine += eolChars;
+                        }
                     }
                 }
 
@@ -594,7 +599,10 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
                 if( isTrimLineFromRight )
                 {
                     tmpLine.Trim(); //trim from right
-                    tmpLine += eolChars;
+                    if( i < tmpn )
+                    {
+                        tmpLine += eolChars;
+                    }
                 }
                 myWxFortranIndent.getFortranIndentLine( tmpLine, indentNum, isCur, isCaseBegin );
             }
@@ -626,7 +634,7 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
         formattedText = firstLineIndentStr + formattedText;
     }
 
-    bool changed = myWxFortranIndent.BuffersDiffer( formattedText, !onlySelected ? edText : selText, eolChars );
+    bool changed = myWxFortranIndent.BuffersDiffer( formattedText, !onlySelected ? edText : selText, eolChars, !( isOnlyBlankLine || isTrimLineFromRight ) );
 
     if ( changed )
     {

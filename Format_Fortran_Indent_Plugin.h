@@ -49,30 +49,6 @@ public :
 
 
 
-struct CMyFortranIndentConfig
-{
-	bool isSameAsEditor;
-	bool isUseTab;
-	int  iTabWidth;
-	bool isKeepBlankLineOnly;
-	bool isTrimLineFromRight;
-
-	CMyFortranIndentConfig()
-	{
-		reset();
-	}
-
-	void reset()
-	{
-		isSameAsEditor = true;
-		isUseTab = false;
-		iTabWidth = 4;
-		isKeepBlankLineOnly = false;
-		isTrimLineFromRight = false;
-	}
-};
-
-
 //class Format_Fortran_Indent_Plugin : public cbToolPlugin
 class Format_Fortran_Indent_Plugin : public cbPlugin
 {
@@ -101,17 +77,18 @@ public:
       */
     virtual int GetConfigurationGroup() const
     {
-        return cgUnknown;
+        //return cgUnknown;
+        return cgEditor;
     }
 
     /** Return plugin's configuration panel.
       * @param parent The parent window.
       * @return A pointer to the plugin's cbConfigurationPanel. It is deleted by the caller.
       */
-    virtual cbConfigurationPanel* GetConfigurationPanel(wxWindow* parent)
-    {
-        return 0;
-    }
+    virtual cbConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
+    //{
+    //    return 0;
+    //}
 
     /** Return plugin's configuration panel for projects.
       * The panel returned from this function will be added in the project's

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resource>
+	<object class="wxPanel" name="dlgFortranIndent">
+		<size>295,142</size>
+		<object class="wxBoxSizer">
+			<orient>wxVERTICAL</orient>
+			<object class="sizeritem">
+				<object class="wxCheckBox" name="cb_SameAsEditor">
+					<label>Config Same As CB Editor</label>
+					<checked>1</checked>
+				</object>
+				<flag>wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_TOP</flag>
+				<border>8</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxCheckBox" name="cb_UseTab">
+					<label>Use Tabs instead of spaces</label>
+					<checked>1</checked>
+				</object>
+				<flag>wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_TOP</flag>
+				<border>8</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxBoxSizer">
+					<object class="sizeritem">
+						<object class="wxStaticText" name="wxID_STATIC">
+							<label>Indentation size (in spaces):</label>
+						</object>
+						<flag>wxLEFT|wxTOP|wxALIGN_LEFT|wxALIGN_TOP</flag>
+						<border>8</border>
+					</object>
+					<object class="sizeritem">
+						<object class="wxSpinCtrl" name="sp_TabWidth">
+							<value>4</value>
+							<min>2</min>
+							<max>12</max>
+						</object>
+						<flag>wxLEFT|wxALIGN_LEFT|wxALIGN_TOP</flag>
+						<border>8</border>
+					</object>
+				</object>
+				<flag>wxALIGN_LEFT|wxALIGN_TOP</flag>
+			</object>
+			<object class="sizeritem">
+                <object class="wxStaticLine" name="ID_STATICLINE1" />
+                <flag>wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL</flag>
+                <border>8</border>
+            </object>
+			<object class="sizeritem">
+				<object class="wxCheckBox" name="cb_KeepBlankLineOnly">
+					<label>Keep Blank Line Only</label>
+				</object>
+				<flag>wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_TOP</flag>
+				<border>8</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxCheckBox" name="cb_TrimLineFromRight">
+					<label>Trim Line From Right</label>
+				</object>
+				<flag>wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_TOP</flag>
+				<border>8</border>
+			</object>
+		</object>
+	</object>
+</resource>
