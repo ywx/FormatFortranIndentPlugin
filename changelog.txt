@@ -1,8 +1,14 @@
 ﻿ChangeLog for Format Fortran Indent Plugin
 ------------------------------------------
 
-Version 0.2 2012-4-27
+Version 0.2 2012-5-2
 =====================
+Fix bug on "interface" statement
+
+Find a bug on "forall" and "where" statement in some case, But not fix.
+
+2012-4-27
+=========
 Add class CFortranIndentConfigDlg to Configure Fortran Indent
 
 Add CFortranIndentConfigDlg.h/.cpp
@@ -85,8 +91,14 @@ Create GitHub repository. https://github.com/ywx/FormatFortranIndentPlugin
 更新历史：
 ---------
 
-Version 0.2 2012-4-27
+Version 0.2 2012-5-2
 =====================
+修复 检查"interface"语句的Bug
+
+发现有一种特例会导致 "forall" 和 "where" 语句检测错误, 但没有修复.
+
+2012-4-27
+=========
 增加 class CFortranIndentConfigDlg 来配置 Fortran 缩进
 
 增加 CMyWxFortranIndent.h/.cpp
