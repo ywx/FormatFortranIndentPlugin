@@ -1,6 +1,16 @@
 ﻿ChangeLog for Format Fortran Indent Plugin
 ------------------------------------------
 
+Version 0.2.1 2012-8-22
+=====================
+Fix some bugs reported by Hossein Talebi<talebi.hossein@gmail.com>.
+Update support on "select type" statement
+Update support on "type" statement
+Update support on "interface" statement
+Add support on "associate" statement
+
+Compiled by MinGW32 4.5.2 with wxWidgets 2.8.12 and Code::Blocks IDE for Fortran v0.8 src.
+
 Version 0.2 2012-5-2
 =====================
 Fix bug on "interface" statement
@@ -91,8 +101,18 @@ Create GitHub repository. https://github.com/ywx/FormatFortranIndentPlugin
 更新历史：
 ---------
 
-Version 0.2 2012-5-2
-=====================
+v0.2.1 2012-8-22
+================
+修复 Hossein Talebi<talebi.hossein@gmail.com> 报告的某些Bug。
+修复 对 "select type" 语句的支持
+增强 对 "type" 语句的支持
+增强 对 "interface" 语句的支持
+增加 对 "associate" 语句的支持
+
+本版用 MinGW32 4.5.2，wxWidgets 2.8.12，Code::Blocks IDE for Fortran v0.8 src 编译
+
+v0.2 2012-5-2
+=============
 修复 检查"interface"语句的Bug
 
 发现有一种特例会导致 "forall" 和 "where" 语句检测错误, 但没有修复.
