@@ -1,6 +1,11 @@
 ﻿ChangeLog for Format Fortran Indent Plugin
 ------------------------------------------
 
+Version 0.2.1 2012-8-25
+=====================
+Update the support on "subroutine" and "function" statement
+Add the support on "block", "critical", "submodule" and "procedure" statement
+
 Version 0.2.1 2012-8-22
 =====================
 Fix some bugs reported by Hossein Talebi<talebi.hossein@gmail.com>.
@@ -100,6 +105,11 @@ Create GitHub repository. https://github.com/ywx/FormatFortranIndentPlugin
 
 更新历史：
 ---------
+
+v0.2.1 2012-8-25
+================
+增强 对 "subroutine" 和 "function" 语句的支持
+增加 对 "block", "critical", "submodule" 和 "procedure" 语句的支持
 
 v0.2.1 2012-8-22
 ================
