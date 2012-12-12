@@ -4,7 +4,8 @@
     <Plugin name="Format_Fortran_Indent_Plugin">
         <Value title="Format Fortran Indent Plugin" />
         <Value version="0.2.1" />
-        <Value description="Code::Blocks Plugin to Format Source Code Indent in Fortran 95, Fortran 90 Source Code (free source form)" />
+        <Value description="Code::Blocks Plugin to Format Source Code Indent in Fortran 95, Fortran 90 Source Code (free source form).
+Not support nonblock-do-construct." />
         <Value author="YWX" />
         <Value authorEmail="wxFortranIndent@163.com" />
         <Value authorWebsite="https://github.com/ywx/FormatFortranIndentPlugin" />

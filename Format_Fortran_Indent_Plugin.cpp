@@ -117,7 +117,7 @@ void Format_Fortran_Indent_Plugin::BuildMenu(wxMenuBar* menuBar)
     if( pos != wxNOT_FOUND )
     {
         wxMenu* m_FortranMenu = menuBar->GetMenu(pos);
-        m_FortranMenu->Append(idCodeFortranIndentActiveFile, _("Format Fortran Indent Plugin"));
+        m_FortranMenu->Append(idCodeFortranIndentActiveFile, _("Format Fortran Indent"));
     }
     else
     {
@@ -126,8 +126,11 @@ void Format_Fortran_Indent_Plugin::BuildMenu(wxMenuBar* menuBar)
         pos = menuBar->FindMenu(_("&Tools"));
         if( pos != wxNOT_FOUND )
         {
-            wxMenu* m_ToolsMenu = menuBar->GetMenu(pos);
-            m_ToolsMenu->Prepend(idCodeFortranIndentActiveFile, _("Format Fortran Indent Plugin"));
+            /// Create Fortran Menu
+            wxMenu* m_FortranMenu = new wxMenu();  // pointer to the Fortran menu
+            menuBar->Insert(pos, m_FortranMenu, _("&Fortran"));
+            /// Append to Menu Fortran
+            m_FortranMenu->Append(idCodeFortranIndentActiveFile, _("Format Fortran Indent"));
         }
         else
         {
@@ -140,7 +143,7 @@ void Format_Fortran_Indent_Plugin::BuildMenu(wxMenuBar* menuBar)
     if( pos != wxNOT_FOUND )
     {
         wxMenu* m_PluginsMenu = menuBar->GetMenu(pos);
-        m_PluginsMenu->Prepend(idCodeFortranIndentActiveFile, _("Format Fortran Indent Plugin"));
+        m_PluginsMenu->Prepend(idCodeFortranIndentActiveFile, _("Format Fortran Indent"));
     }
     else
     {

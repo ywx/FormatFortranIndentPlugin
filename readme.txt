@@ -2,7 +2,8 @@
 ----------------------------
 A Code::Blocks Plugin to Format Source Code Indent for Fortran 95, Fortran 90 Source Code (free source form).
 
-NOTE: It could not completely support "type", "function", "subroutine" statement.
+NOTE: It could not completely support "type", "function", "subroutine" statement. It could not support nonblock-do-construct. There are some known bugs in "if", "for", "forall", "where" statement in some case.
+
 
 Author:    YWX (wxFortranIndent@163.com)
 Created:   2011-12-22
@@ -28,7 +29,7 @@ For information on Git，please see http://git-scm.com/ or https://github.com/gi
 For information on Git for Windows，please see http://code.google.com/p/msysgit/
 For information on TortoiseGit，please see http://code.google.com/p/tortoisegit/
 
-Format_Fortran_Indent_Plugin.cbplugin in repository compile by MinGW32 4.5.2(MinGW32 4.6.2 before Version 0.2)  with wxWidgets 2.8.12 and Code::Blocks IDE for Fortran v0.7 src.
+Format_Fortran_Indent_Plugin.cbplugin in repository compile by MinGW32 4.5.2(MinGW32 4.6.2 before Version 0.2)  with wxWidgets 2.8.12 and Code::Blocks IDE for Fortran v1.0 rev 8455 src( v0.7 before Version 0.2.1 ). In cb1211 branch, it compiled by MinGW32 4.7.1(tdm-1) with Code::Blocks Release 12.11 rev 8629 src.
 
 Compilers and Options ( for Windows )
 =====================================
@@ -39,7 +40,7 @@ For information on Code::Blocks Plug-In development, please see http://wiki.code
 For information on Code::Blocks IDE for Fortran, please see http://darmar.vgtu.lt/ or http://code.google.com/p/fortranproject/
 
 
-Last updated: April 27th 2012
+Last updated: December 12th 2012
 
 
 
@@ -48,7 +49,7 @@ Format Fortran Indent Plugin
 ----------------------------
 一个用于将Fortran 95, Fortran 90 自由格式源文件，进行代码缩进格式化的 Code::Blocks 插件。
 
-注意：目前它还不能完美支持 type, function, subroutine 等语句。
+注意：目前它还不能完美支持 type, function, subroutine 等语句。它也不能支持 nonblock-do-construct 。在对 if, for, forall, where 语句的支持中存在已知的可能发生的错误（但出现的概率较小）。
 
 作者:    YWX (wxFortranIndent@163.com)
 创建于:   2011-12-22
@@ -67,7 +68,7 @@ git clone git://github.com/ywx/FormatFortranIndentPlugin.git FormatFortranIndent
 关于 Git for Windows，请访问 http://code.google.com/p/msysgit/
 关于 TortoiseGit，请访问 http://code.google.com/p/tortoisegit/
 
-仓库上的 Format_Fortran_Indent_Plugin.cbplugin 由 wxWidgets 2.8.12 和 Code::Blocks IDE for Fortran 0.7 在 MinGW32 4.5.2 ( 0.2 版前用 MinGW32 4.6.2 ) 编译生成。
+仓库上的 Format_Fortran_Indent_Plugin.cbplugin 基于 wxWidgets 2.8.12 和 Code::Blocks IDE for Fortran v1.0 rev 8455 src ( 0.2.1版前为 v0.7 ) 用 MinGW32 4.5.2 ( 0.2 版前用 MinGW32 4.6.2 ) 编译生成。cb1211分支 基于 Code::Blocks Release 12.11 rev 8629 src 用 MinGW32 4.7.1 (tdm-1) 编译生成。
 
 编译插件（在Windows下）：
 ========================
@@ -82,7 +83,7 @@ git clone git://github.com/ywx/FormatFortranIndentPlugin.git FormatFortranIndent
 关于 Code::Blocks Plug-In 开发，请访问  http://wiki.codeblocks.org/index.php?title=Developer_documentation
 关于 Code::Blocks IDE for Fortran，请访问 http://darmar.vgtu.lt/ 或 http://code.google.com/p/fortranproject/
 
-Format Fortran Indent Plugin 只是运用正则表达式对源代码进行以行为单位的模式匹配，然后进行代码缩进格式化。所以它只能支持Fortran 95, Fortran 90语法中的一个子集。目前它还不能完美支持 type, function, subroutine 等语句。有空的话，我会完善它。希望大家也来关心它，培养它。更希望有人能从编译原理方向重塑它。
+Format Fortran Indent Plugin 只是运用正则表达式对源代码进行以行为单位的模式匹配，然后进行代码缩进格式化。所以它只能支持Fortran 95, Fortran 90语法中的一个子集。目前它还不能完美支持 type, function, subroutine 等语句，也不能支持 nonblock-do-construct 。有空的话，我会完善它。希望大家也来关心它，培养它。更希望有人能从编译原理方向重塑它。
 
 
-最后更新: 2012-4-27
+最后更新: 2012-12-12
