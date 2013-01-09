@@ -347,54 +347,7 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
         return false;
     }
 
-    ed->UnfoldAll();
-
-    bool onlySelected = false;
-    wxString edText;
-    wxString selText;
-
-    const int pos = control->GetCurrentPos();
-    int start = control->GetSelectionStart();
-    int end = control->GetSelectionEnd();
-    int indexLineStart = 0, indexLineEnd = 0;
-
-    if (start != end)
-    {
-        onlySelected = true;
-        start = control->GetLineIndentPosition(control->LineFromPosition(start));
-        control->GotoPos(start);
-        control->Home();
-        indexLineStart = control->GetCurrentLine();
-        start = control->GetCurrentPos();
-        control->SetSelectionStart(start);
-        end = control->GetLineEndPosition(control->LineFromPosition(end));
-        control->GotoPos(end);
-        indexLineEnd = control->GetCurrentLine();
-        control->GotoPos(start);
-        control->SetSelectionEnd(end);
-        selText = control->GetTextRange(start, end);
-    }
-    else
-        edText = control->GetText();
-
-    wxString formattedText;
-
-    // load settings
-    CMyFortranIndentConfig myFortranIndentConfig;
-
-	ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("fortran_indent"));
-	wxASSERT( 0 != cfg );
-
-	if( cfg->Read( _T("is_SameAsEditor"), & myFortranIndentConfig.isSameAsEditor ) )
-	{
-		cfg->Read( _T("is_UseTab"), & myFortranIndentConfig.isUseTab );
-		cfg->Read( _T("i_TabWidth"), & myFortranIndentConfig.iTabWidth );
-		cfg->Read( _T("is_KeepBlankLineOnly"), & myFortranIndentConfig.isKeepBlankLineOnly );
-		cfg->Read( _T("is_TrimLineFromRight"), & myFortranIndentConfig.isTrimLineFromRight );
-	}
-
     wxString eolChars;
-
     switch (control->GetEOLMode())
     {
         case wxSCI_EOL_CRLF:
@@ -410,36 +363,22 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
             break;
     }
 
-    bool isRemoveSelEOL = false;
-    int nLines = control->GetLineCount();
-    int indentNum = 0;
-    wxString firstLineIndentStr;
-    if (!onlySelected)
-    {
-        indexLineStart = 0;
-        indexLineEnd = nLines;
-    }
-    else
-    {
-        ++indexLineEnd;
-        if( indexLineEnd < nLines )
-            isRemoveSelEOL = true;
-        int indentW = ed->GetLineIndentInSpaces(indexLineStart);
-        int tabW = control->GetTabWidth();
-        indentNum = indentW / tabW;
-        if( (indentW % tabW) )
-        {
-            ++indentNum;
-        }
-        firstLineIndentStr = ed->GetLineIndentString(indexLineStart);
-    }
-    bool isCur = true;
-    bool isCaseBegin = false;
-    IsMultiLines isMultiLines;
-	isMultiLines.reset();
-    wxString tmpLine;
-    wxString tmpMultiLines;
-    const int tmpn = indexLineEnd - 1;
+    // load settings
+    CMyFortranIndentConfig myFortranIndentConfig;
+
+	ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("fortran_indent"));
+	wxASSERT( 0 != cfg );
+
+	if( cfg->Read( _T("is_SameAsEditor"), & myFortranIndentConfig.isSameAsEditor ) )
+	{
+		cfg->Read( _T("is_UseTab"), & myFortranIndentConfig.isUseTab );
+		cfg->Read( _T("i_TabWidth"), & myFortranIndentConfig.iTabWidth );
+		cfg->Read( _T("is_KeepBlankLineOnly"), & myFortranIndentConfig.isKeepBlankLineOnly );
+		cfg->Read( _T("is_TrimLineFromRight"), & myFortranIndentConfig.isTrimLineFromRight );
+	}
+
+    bool isOnlyBlankLine = myFortranIndentConfig.isKeepBlankLineOnly;
+    bool isTrimLineFromRight = myFortranIndentConfig.isTrimLineFromRight;
 
     wxString indentStr;
     if( myFortranIndentConfig.isSameAsEditor )
@@ -457,10 +396,67 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
             indentStr = wxString(wxT(' '), myFortranIndentConfig.iTabWidth );
     }
 
-    bool isOnlyBlankLine = myFortranIndentConfig.isKeepBlankLineOnly;
-    bool isTrimLineFromRight = myFortranIndentConfig.isTrimLineFromRight;
+    ed->UnfoldAll();
 
-    int lineCounter = 0;
+    bool onlySelected = false;
+    wxString edText;
+
+    const int pos_cur = control->GetCurrentPos();
+    int pos_selStart = control->GetSelectionStart();
+    int pos_selEnd = control->GetSelectionEnd();
+    int indexLineStart = 0, indexLineEnd = 0;
+    int nLines = control->GetLineCount();
+
+    if( pos_selStart != pos_selEnd )
+    {
+        onlySelected = true;
+        indexLineStart = control->LineFromPosition( pos_selStart );
+        control->GotoLine( indexLineStart );
+        pos_selStart = control->GetCurrentPos();
+        indexLineEnd = control->LineFromPosition( pos_selEnd );
+        if( indexLineEnd == nLines )
+        {
+            control->GotoLine( indexLineEnd );
+            control->LineEnd();
+        }
+        else
+        {
+            control->GotoLine( indexLineEnd + 1 );
+        }
+        pos_selEnd = control->GetCurrentPos();
+        control->SetSelectionStart( pos_selStart );
+        control->SetSelectionEnd( pos_selEnd );
+        edText = control->GetTextRange( pos_selStart, pos_selEnd );
+    }
+    else
+        edText = control->GetText();
+
+    int indentNum = 0;
+    if( onlySelected )
+    {
+        nLines = indexLineEnd + 1;
+        int indentW = ed->GetLineIndentInSpaces( indexLineStart );
+        int tabW = control->GetTabWidth();
+        indentNum = indentW / tabW;
+        if( (indentW % tabW) > 0 )
+        {
+            ++indentNum;
+        }
+    }
+    else
+    {
+        indexLineStart = 0;
+        indexLineEnd = nLines - 1;
+    }
+
+    wxString formattedText;
+
+    bool isCur = true;
+    bool isCaseBegin = false;
+    IsMultiLines isMultiLines;
+    wxString tmpLine;
+    wxString tmpMultiLines;
+
     /// WX_DEFINE_ARRAY_INT(int, intArray);
     intArray new_bookmark_array;
     intArray ed_breakpoints_array;
@@ -469,7 +465,7 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
     wxSetCursor(*wxHOURGLASS_CURSOR);
 
     ///formattedText
-    for( int i = indexLineStart; i < indexLineEnd; ++i )
+    for( int i = indexLineStart; i < nLines; ++i )
     {
         if (ed->HasBookmark(i))
         {
@@ -536,7 +532,7 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
             {
                 tempLine = control->GetLine( j ).Trim(false); // trim from left
 
-                if( 0 == tempLine.Len() && j < tmpn )
+                if( 0 == tempLine.Len() && j < indexLineEnd )
                 {
                     if( isOnlyBlankLine )
                     {
@@ -553,7 +549,7 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
                     if( isTrimLineFromRight )
                     {
                         tempLine.Trim(); //trim from right
-                        if( j < tmpn )
+                        if( j < indexLineEnd )
                         {
                             tempLine += eolChars;
                         }
@@ -585,7 +581,7 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
         }
         else
         {
-            if( 0 == tmpLine.Len() && i < tmpn )
+            if( 0 == tmpLine.Len() && i < indexLineEnd )
             {
                 if( isOnlyBlankLine )
                 {
@@ -602,7 +598,7 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
                 if( isTrimLineFromRight )
                 {
                     tmpLine.Trim(); //trim from right
-                    if( i < tmpn )
+                    if( i < indexLineEnd )
                     {
                         tmpLine += eolChars;
                     }
@@ -615,39 +611,32 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
             {
                 tmpN = tmpN - 1;
             }
-            for( int j = 0; j < tmpN; ++j )
+            for( int k = 0; k < tmpN; ++k )
             {
                 formattedText += indentStr;
             }
             formattedText += tmpLine;
-            //if( i < tmpn )
-            //    formattedText += eolChars; //wxT("\n");
         }
     }
 
-    if( onlySelected )
-    {
-        if( isRemoveSelEOL )
-        {
-            //for( int i = 0; i < eolChars.Length(); ++i )
-            //    formattedText.RemoveLast();
-            formattedText.Trim(); // trim from right
-        }
-        formattedText.Trim(false); // trim from left
-        formattedText = firstLineIndentStr + formattedText;
-    }
-
-    bool changed = myWxFortranIndent.BuffersDiffer( formattedText, !onlySelected ? edText : selText, eolChars, !( isOnlyBlankLine || isTrimLineFromRight ) );
+    bool changed = myWxFortranIndent.BuffersDiffer( formattedText, edText, eolChars, !( isOnlyBlankLine || isTrimLineFromRight ) );
 
     if ( changed )
     {
         control->BeginUndoAction();
+
+        size_t iCount = 0;
+        iCount = new_bookmark_array.GetCount();
+
         if (onlySelected)
         {
             control->ReplaceSelection(formattedText);
-            if( 0 < new_bookmark_array.GetCount() )
+            if( 0 < iCount ) // new_bookmark_array.GetCount()
             {
-                ed->ToggleBookmark( tmpn );
+                if( ! ( ( 0 == indexLineStart ) && ( control->GetLineCount() == nLines ) ) )
+                {
+                    ed->ToggleBookmark( ( control->GetLineCount() == nLines ) ? indexLineEnd : nLines );
+                }
             }
         }
         else
@@ -655,7 +644,6 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
             control->SetText(formattedText);
         }
 
-        size_t iCount = new_bookmark_array.GetCount();
         for( size_t i = 0; i < iCount; ++i )
         {
             ed->ToggleBookmark( new_bookmark_array[i] ); // new_bookmark_array.Item(i)
@@ -663,13 +651,21 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
 
         iCount = 0;
         iCount = ed_breakpoints_array.GetCount();
-        for( size_t i = 0; i < iCount; ++i )
+        if( 0 < iCount )
         {
-            ed->ToggleBreakpoint( ed_breakpoints_array[i] ); // ed_breakpoints_array.Item(i)
+            if( indexLineEnd == ed_breakpoints_array[ iCount - 1 ] )
+            {
+                ed->RemoveBreakpoint( indexLineStart );
+            }
+
+            for( size_t i = 0; i < iCount; ++i )
+            {
+                ed->AddBreakpoint( ed_breakpoints_array[i] ); // ed_breakpoints_array.Item(i)
+            }
         }
 
         control->EndUndoAction();
-        control->GotoPos(pos);
+        control->GotoPos(pos_cur);
         ed->SetModified(true);
     }
 
