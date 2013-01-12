@@ -8,3 +8,8 @@
 .objs
 *.[oa]
 *.obj
+# Ignore build
+*.dll
+*.so
+*.zip
+*.cbplugin

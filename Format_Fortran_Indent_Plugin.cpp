@@ -623,27 +623,9 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
 
     if ( changed )
     {
-        control->BeginUndoAction();
-
+		// clear Bookmark and Breakpoint in change
         size_t iCount = 0;
         iCount = new_bookmark_array.GetCount();
-
-        if (onlySelected)
-        {
-            control->ReplaceSelection(formattedText);
-            if( 0 < iCount ) // new_bookmark_array.GetCount()
-            {
-                if( ! ( ( 0 == indexLineStart ) && ( control->GetLineCount() == nLines ) ) )
-                {
-                    ed->ToggleBookmark( ( control->GetLineCount() == nLines ) ? indexLineEnd : nLines );
-                }
-            }
-        }
-        else
-        {
-            control->SetText(formattedText);
-        }
-
         for( size_t i = 0; i < iCount; ++i )
         {
             ed->ToggleBookmark( new_bookmark_array[i] ); // new_bookmark_array.Item(i)
@@ -651,22 +633,36 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
 
         iCount = 0;
         iCount = ed_breakpoints_array.GetCount();
-        if( 0 < iCount )
-        {
-            if( indexLineEnd == ed_breakpoints_array[ iCount - 1 ] )
-            {
-                ed->RemoveBreakpoint( indexLineStart );
-            }
+		for( size_t i = 0; i < iCount; ++i )
+		{
+			ed->ToggleBreakpoint( ed_breakpoints_array[i] ); // ed_breakpoints_array.Item(i)
+		}
 
-            for( size_t i = 0; i < iCount; ++i )
-            {
-                ed->AddBreakpoint( ed_breakpoints_array[i] ); // ed_breakpoints_array.Item(i)
-            }
+        if (onlySelected)
+        {
+            control->ReplaceSelection(formattedText);
+        }
+        else
+        {
+            control->SetText(formattedText);
         }
 
-        control->EndUndoAction();
+		// set Bookmark and Breakpoint in change
+        iCount = 0;
+        iCount = new_bookmark_array.GetCount();
+        for( size_t i = 0; i < iCount; ++i )
+        {
+            ed->ToggleBookmark( new_bookmark_array[i] ); // new_bookmark_array.Item(i)
+        }
+
+        iCount = 0;
+        iCount = ed_breakpoints_array.GetCount();
+		for( size_t i = 0; i < iCount; ++i )
+		{
+			ed->ToggleBreakpoint( ed_breakpoints_array[i] ); // ed_breakpoints_array.Item(i)
+		}
+
         control->GotoPos(pos_cur);
-        ed->SetModified(true);
     }
 
     wxSetCursor(wxNullCursor);

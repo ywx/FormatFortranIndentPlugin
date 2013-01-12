@@ -1,6 +1,12 @@
 ﻿ChangeLog for Format Fortran Indent Plugin
 ------------------------------------------
 
+Version 0.2.2 2013-1-12
+=====================
+Modify the method of setting BookMark and BreakPoint in FormatEditor()
+Update readme
+Keep master Branch Source Only
+
 Version 0.2.2 2013-1-9
 =====================
 Restructure Format_Fortran_Indent_Plugin::FormatEditor()
@@ -117,6 +123,12 @@ Create GitHub repository. https://github.com/ywx/FormatFortranIndentPlugin
 
 更新历史：
 ---------
+
+v0.2.2 2013-1-12
+================
+更改 FormatEditor() 中设置 BookMark 和 BreakPoint 的方式 
+更新 readme
+在 master Branch 只保留源代码
 
 v0.2.2 2013-1-9
 ================

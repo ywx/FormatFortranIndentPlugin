@@ -29,18 +29,19 @@ For information on Git，please see http://git-scm.com/ or https://github.com/gi
 For information on Git for Windows，please see http://code.google.com/p/msysgit/
 For information on TortoiseGit，please see http://code.google.com/p/tortoisegit/
 
-Format_Fortran_Indent_Plugin.cbplugin in repository compile by MinGW32 4.5.2(MinGW32 4.6.2 before Version 0.2)  with wxWidgets 2.8.12 and Code::Blocks IDE for Fortran v1.0 rev 8455 src( v0.7 before Version 0.2.1 ). In cb1211 branch, it compiled by MinGW32 4.7.1(tdm-1) with Code::Blocks Release 12.11 rev 8629 src.
+Format_Fortran_Indent_Plugin.cbplugin in repository compile by MinGW TDM-GCC with wxWidgets and Code::Blocks src. In cbRelease branch, it is built for Code::Blocks Release. In cbFortran branch, it is built for Code::Blocks IDE for Fortran. Keep source code for project only in master branch.
 
 Compilers and Options ( for Windows )
 =====================================
-For information on MinGW32, please see http://www.mingw.org
+For information on MinGW, please see http://www.mingw.org
+For information on MinGW TDM-GCC, please see http://tdm-gcc.tdragon.net
 For information on wxWidgets, please see http://www.wxwidgets.org
 For information on Code::Blocks, please see http://www.codeblocks.org
 For information on Code::Blocks Plug-In development, please see http://wiki.codeblocks.org/index.php?title=Developer_documentation
 For information on Code::Blocks IDE for Fortran, please see http://darmar.vgtu.lt/ or http://code.google.com/p/fortranproject/
 
 
-Last updated: December 12th 2012
+Last updated: January 12th 2013
 
 
 
@@ -68,16 +69,17 @@ git clone git://github.com/ywx/FormatFortranIndentPlugin.git FormatFortranIndent
 关于 Git for Windows，请访问 http://code.google.com/p/msysgit/
 关于 TortoiseGit，请访问 http://code.google.com/p/tortoisegit/
 
-仓库上的 Format_Fortran_Indent_Plugin.cbplugin 基于 wxWidgets 2.8.12 和 Code::Blocks IDE for Fortran v1.0 rev 8455 src ( 0.2.1版前为 v0.7 ) 用 MinGW32 4.5.2 ( 0.2 版前用 MinGW32 4.6.2 ) 编译生成。cb1211分支 基于 Code::Blocks Release 12.11 rev 8629 src 用 MinGW32 4.7.1 (tdm-1) 编译生成。
+仓库上的 Format_Fortran_Indent_Plugin.cbplugin 基于 wxWidgets 和 Code::Blocks src 由 MinGW TDM-GCC 编译生成。cbRelease 分支 适用于 Code::Blocks Release 版本。cbFortran 分支 适用于 Code::Blocks IDE for Fortran 版本。master 分支 只保留用于项目构建的源代码。
 
 编译插件（在Windows下）：
 ========================
 1，Windows 最好请用 MinGW 编译器，和 Code::Blocks 集成开发环境。
-2，请下载 wxWidgets 2.8.x 源代码，编译生成单一的动态链接库SDK。
+2，请下载 wxWidgets 源代码，编译生成单一的动态链接库SDK。
 3，请下载 Code::Blocks Fortran 或 Code::Blocks 源代码，用步骤2生成的动态链接库SDK编译生成 Code::Blocks SDK 和 Code::Blocks。
 4，请从上述代码仓库上下载Release版FormatFortranIndentPlugin源代码。用步骤2和3生成的SDK在 Code::Blocks 编译。
 
 关于 MinGW32，请访问 http://www.mingw.org
+关于 MinGW TDM-GCC，请访问 http://tdm-gcc.tdragon.net
 关于 wxWidgets，请访问 http://www.wxwidgets.org
 关于 Code::Blocks，请访问 http://www.codeblocks.org
 关于 Code::Blocks Plug-In 开发，请访问  http://wiki.codeblocks.org/index.php?title=Developer_documentation
@@ -86,4 +88,4 @@ git clone git://github.com/ywx/FormatFortranIndentPlugin.git FormatFortranIndent
 Format Fortran Indent Plugin 只是运用正则表达式对源代码进行以行为单位的模式匹配，然后进行代码缩进格式化。所以它只能支持Fortran 95, Fortran 90语法中的一个子集。目前它还不能完美支持 type, function, subroutine 等语句，也不能支持 nonblock-do-construct 。有空的话，我会完善它。希望大家也来关心它，培养它。更希望有人能从编译原理方向重塑它。
 
 
-最后更新: 2012-12-12
+最后更新: 2013-1-12
