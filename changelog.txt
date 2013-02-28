@@ -1,6 +1,14 @@
 ﻿ChangeLog for Format Fortran Indent Plugin
 ------------------------------------------
 
+Version 0.2.2 2013-2-28
+=====================
+Fix a bug in "type" statement reported by ferdinand.tschirsich<ferdinand.tschirsich@uni-ulm.de>.
+Update readme
+Add "type" prefix to "function" statement
+Add support on "enum" statement
+
+
 Version 0.2.2 2013-1-12
 =====================
 Modify the method of setting BookMark and BreakPoint in FormatEditor()
@@ -123,6 +131,13 @@ Create GitHub repository. https://github.com/ywx/FormatFortranIndentPlugin
 
 更新历史：
 ---------
+
+v0.2.2 2013-2-28
+================
+修复 ferdinand.tschirsich<ferdinand.tschirsich@uni-ulm.de> 报告的在 "type" 语句中的Bug
+更新 readme
+使 "function" 语句 支持"type" 定义属性
+增加 对 "enum" 语句的支持
 
 v0.2.2 2013-1-12
 ================

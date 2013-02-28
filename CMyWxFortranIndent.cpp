@@ -41,9 +41,9 @@ void CMyWxFortranIndent::myCreateFortranRegEx()
 	myFortranRegEx[wxT("regexEndInterface")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)(interface)((\\s+)(([a-zA-Z0-9_]+)|((assignment)(\\s*)\\((\\s*)(=)(\\s*)\\))|((operator)(\\s*)\\((.+)\\))))?((\\s*)!(.*))?(\\s*)$"), options );
 	myFortranRegEx[wxT("regexContains")] = new wxRegEx( wxT("^(\\s*)(contains)((\\s*)!(.*))?(\\s*)$"), options );
 	myFortranRegEx[wxT("regexSubroutine")] = new wxRegEx( wxT("^(\\s*)(((pure)|(impure))(\\s+))?(((recursive)|(elemental))(\\s+))?((module)(\\s+))?(subroutine)(\\s+)([a-zA-Z0-9_]+)((\\s*)(\\()(\\s*)(([a-zA-Z0-9_]+)((\\s*)(,)(\\s*)([a-zA-Z0-9_]+))*)?(\\s*)(\\))(\\s*))?"), options );
-	myFortranRegEx[wxT("regexFunction")] = new wxRegEx( wxT("^(\\s*)(((pure)|(impure))\\s+)?(((recursive)|(elemental))\\s+)?(((integer)|(real)|(complex)|(logical)|(character)|((double)(\\s*)(precision)))(\\((\\s*)((len)(\\s*)=(\\s*))?(\\d*)(\\s*)\\))?)?(\\s*)((module)(\\s+))?(function)(\\s+)([a-zA-Z0-9_]+)(\\s*)\\((\\s*)(([a-zA-Z0-9_]+)((\\s*)(,)(\\s*)([a-zA-Z0-9_]+))*)?(\\s*)\\)"), options );
+	myFortranRegEx[wxT("regexFunction")] = new wxRegEx( wxT("^(\\s*)(((pure)|(impure))\\s+)?(((recursive)|(elemental))\\s+)?(((integer)|(real)|(complex)|(logical)|(character)|((double)(\\s*)(precision))|((type)(\\s*)\\((\\s*)([a-zA-Z0-9_]+)((\\s*)\\((\\s*)([a-zA-Z0-9_]+)(\\s*)\\))?(\\s*)\\)))(\\((\\s*)((len)(\\s*)=(\\s*))?(\\d*)(\\s*)\\))?)?(\\s*)((module)(\\s+))?(function)(\\s+)([a-zA-Z0-9_]+)(\\s*)\\((\\s*)(([a-zA-Z0-9_]+)((\\s*)(,)(\\s*)([a-zA-Z0-9_]+))*)?(\\s*)\\)"), options );
 	myFortranRegEx[wxT("regexType")] = new wxRegEx( wxT("^(\\s*)((type)(\\s*)(\\()(\\s*)([a-zA-Z0-9_]+)(\\s*)(\\)))(\\s*)"), options );
-	myFortranRegEx[wxT("regexTypeDefine")] = new wxRegEx( wxT("^(\\s*)((type)((\\s*),(\\s*)((public)|(private)|(protected)|(abstract)|((extends)(\\s*)\\((\\s*)([a-zA-Z0-9_]+)(\\s*)\\)))(\\s+))?((\\s*)(::)?(\\s*)([a-zA-Z0-9_]+)))(\\s*)"), options );
+	myFortranRegEx[wxT("regexTypeDefine")] = new wxRegEx( wxT("^(\\s*)((type)((\\s*),(\\s*)((public)|(private)|(protected)))?((\\s*),(\\s*)((abstract)|((extends)(\\s*)\\((\\s*)([a-zA-Z0-9_]+)(\\s*)\\))))?((\\s*),(\\s*)((bind)(\\s*)\\((\\s*)(c)(\\s*)\\)))?((\\s*)(::)?(\\s*)([a-zA-Z0-9_]+)))(\\s*)"), options );
 	myFortranRegEx[wxT("regexEndType")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)(type)((\\s+)([a-zA-Z0-9_]+))?(\\s*)"), options );
 	myFortranRegEx[wxT("regexEndDo")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)((do)|(forall))((\\s+)([a-zA-Z0-9_]+))?(\\s*)"), options );
 	myFortranRegEx[wxT("regexDo")] = new wxRegEx( wxT("^(\\s*)(([a-zA-Z0-9_]+)(\\s*)(:)(\\s*))?(do)((\\s+)([a-zA-Z0-9_])(.+))?((\\s*)!(.*))?(\\s*)$"), options );
@@ -64,6 +64,9 @@ void CMyWxFortranIndent::myCreateFortranRegEx()
 
 	myFortranRegEx[wxT("regexCritical")] = new wxRegEx( wxT("^(\\s*)(([a-zA-Z0-9_]+)(\\s*)(:)(\\s*))?((block)|(critical)|((submodule)(\\s*)\\((.+)\\)(\\s*)([a-zA-Z0-9_]+))|(((module)(\\s+))?(procedure)((\\s+)([a-zA-Z0-9_]+))?))((\\s*)!(.*))?(\\s*)$"), options );
 	myFortranRegEx[wxT("regexEndCritical")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)((block)|(critical)|(submodule)|(procedure))((\\s+)([a-zA-Z0-9_]+))?((\\s*)!(.*))?(\\s*)$"), options );
+
+	myFortranRegEx[wxT("regexEnum")] = new wxRegEx( wxT("^(\\s*)(enum)((\\s*),(\\s*)((bind)(\\s*)\\((\\s*)(c)(\\s*)\\)))((\\s*)!(.*))?(\\s*)$"), options );
+	myFortranRegEx[wxT("regexEndEnum")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)(enum)((\\s*)!(.*))?(\\s*)$"), options );
 
 	myFortranRegEx[wxT("regexComment")] = new wxRegEx( wxT("(!(.*))((\r\n)|(\r)|(\n))?$"), options | wxRE_NEWLINE );
 
@@ -240,6 +243,21 @@ void CMyWxFortranIndent::getFortranIndentLine( const wxString & src1, int & inde
     }
 
 	if ( myFortranRegEx[wxT("regexCritical")]->Matches( src ) )
+    {
+        indentNum += 1;
+        isCur = false;
+        return ;
+    }
+
+	// enum
+    if ( myFortranRegEx[wxT("regexEndEnum")]->Matches( src ) )
+    {
+        indentNum -= 1;
+        isCur = true;
+        return ;
+    }
+
+	if ( myFortranRegEx[wxT("regexEnum")]->Matches( src ) )
     {
         indentNum += 1;
         isCur = false;
