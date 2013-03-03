@@ -1,6 +1,10 @@
 ﻿ChangeLog for Format Fortran Indent Plugin
 ------------------------------------------
 
+Version 0.2.2 2013-3-3
+=====================
+Can not support mp-subprogram-stmt ( "module procedure" & "end procedure" statement )
+
 Version 0.2.2 2013-2-28
 =====================
 Fix a bug in "type" statement reported by ferdinand.tschirsich<ferdinand.tschirsich@uni-ulm.de>.
@@ -131,6 +135,10 @@ Create GitHub repository. https://github.com/ywx/FormatFortranIndentPlugin
 
 更新历史：
 ---------
+
+v0.2.2 2013-3-3
+================
+不能支持 mp-subprogram-stmt ( "module procedure" & "end procedure" 结构 )
 
 v0.2.2 2013-2-28
 ================

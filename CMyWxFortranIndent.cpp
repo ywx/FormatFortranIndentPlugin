@@ -62,8 +62,8 @@ void CMyWxFortranIndent::myCreateFortranRegEx()
 	myFortranRegEx[wxT("regexAssociate")] = new wxRegEx( wxT("^(\\s*)(([a-zA-Z0-9_]+)(\\s*)(:)(\\s*))?(associate)(\\s*)\\((.+)\\)((\\s*)!(.*))?(\\s*)$"), options );
 	myFortranRegEx[wxT("regexEndAssociate")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)(associate)((\\s+)([a-zA-Z0-9_]+))?((\\s*)!(.*))?(\\s*)$"), options );
 
-	myFortranRegEx[wxT("regexCritical")] = new wxRegEx( wxT("^(\\s*)(([a-zA-Z0-9_]+)(\\s*)(:)(\\s*))?((block)|(critical)|((submodule)(\\s*)\\((.+)\\)(\\s*)([a-zA-Z0-9_]+))|(((module)(\\s+))?(procedure)((\\s+)([a-zA-Z0-9_]+))?))((\\s*)!(.*))?(\\s*)$"), options );
-	myFortranRegEx[wxT("regexEndCritical")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)((block)|(critical)|(submodule)|(procedure))((\\s+)([a-zA-Z0-9_]+))?((\\s*)!(.*))?(\\s*)$"), options );
+	myFortranRegEx[wxT("regexCritical")] = new wxRegEx( wxT("^(\\s*)(([a-zA-Z0-9_]+)(\\s*)(:)(\\s*))?((block)|(critical)|((submodule)(\\s*)\\((.+)\\)(\\s*)([a-zA-Z0-9_]+)))((\\s*)!(.*))?(\\s*)$"), options );
+	myFortranRegEx[wxT("regexEndCritical")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)((block)|(critical)|(submodule))((\\s+)([a-zA-Z0-9_]+))?((\\s*)!(.*))?(\\s*)$"), options );
 
 	myFortranRegEx[wxT("regexEnum")] = new wxRegEx( wxT("^(\\s*)(enum)((\\s*),(\\s*)((bind)(\\s*)\\((\\s*)(c)(\\s*)\\)))((\\s*)!(.*))?(\\s*)$"), options );
 	myFortranRegEx[wxT("regexEndEnum")] = new wxRegEx( wxT("^(\\s*)(end)(\\s*)(enum)((\\s*)!(.*))?(\\s*)$"), options );
