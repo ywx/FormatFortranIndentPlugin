@@ -1,6 +1,15 @@
 ﻿ChangeLog for Format Fortran Indent Plugin
 ------------------------------------------
 
+Version 0.2.3 2013-3-14
+=====================
+Update the support on "function" statement
+
+Add #include <configmanager.h> for Linux
+Update FormatFortranIndentPlugin.cbp to Add "Win32 Release" , "Win32 Debug" , "Linux Release" and "Linux default" Build targer
+Add cbReleaseCentOS branch
+Update readme
+
 Version 0.2.2 2013-3-3
 =====================
 Can not support mp-subprogram-stmt ( "module procedure" & "end procedure" statement )
@@ -135,6 +144,15 @@ Create GitHub repository. https://github.com/ywx/FormatFortranIndentPlugin
 
 更新历史：
 ---------
+
+v0.2.3 2013-3-14
+================
+增强 对 "function" 语句的支持
+
+增加 #include <configmanager.h> 避免在 Linux CentOS 编译出错
+更新 FormatFortranIndentPlugin.cbp 增加 "Win32 Release" , "Win32 Debug" , "Linux Release" 和 "Linux default" Build targer
+增加 cbReleaseCentOS 分支
+更新 readme
 
 v0.2.2 2013-3-3
 ================

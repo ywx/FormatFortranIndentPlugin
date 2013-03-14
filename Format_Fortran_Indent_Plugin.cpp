@@ -16,6 +16,7 @@
 #include <wx/progdlg.h>
 #include "cbstyledtextctrl.h"
 
+#include <configmanager.h>
 #include <editormanager.h>
 #include <projectmanager.h>
 #include <logmanager.h>
