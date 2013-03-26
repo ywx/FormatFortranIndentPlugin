@@ -3,6 +3,10 @@
 
 Version 0.2.3 2013-3-26
 =====================
+Could not support for CoCo( conditional compilation ) Preprocessor ( ISO/IEC 1539-3:1998 )
+
+Version 0.2.3 2013-3-26
+=====================
 Add the support for Preprocessor that Petros Aristidou<p3tris@gmail.com> need
 
 Add CMyFortranIndentConfig.h and CMyFortranIndentConfig.cpp for CMyFortranIndentConfig struct
@@ -152,6 +156,10 @@ Create GitHub repository. https://github.com/ywx/FormatFortranIndentPlugin
 
 更新历史：
 ---------
+
+v0.2.3 2013-3-26
+=================
+不能支持 CoCo( conditional compilation ) Preprocessor ( ISO/IEC 1539-3:1998 )
 
 v0.2.3 2013-3-26
 =================

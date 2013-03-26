@@ -76,8 +76,7 @@
 					<label>Preprocessor Type</label>
 					<content>
 						<item>None</item>
-						<item>Intel Fortran Preprocessor</item>
-						<item>CoCo Preprocessor ISO/IEC 1539-3:1998</item>
+						<item>C Preprocessor</item>
 					</content>
 					<default>-1</default>
 				</object>

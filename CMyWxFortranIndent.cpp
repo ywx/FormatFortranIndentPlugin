@@ -73,8 +73,7 @@ void CMyWxFortranIndent::myCreateFortranRegEx()
 
 	myFortranRegEx[wxT("regexBlankLine")] = new wxRegEx( wxT("([ \t]+)((\r\n)|(\r)|(\n))"), options | wxRE_NEWLINE );
 
-	myFortranRegEx[wxT("regexPreprocessorIntel")] = new wxRegEx( wxT("^#(define|undef|ifdef|ifndef|if|elif|else|endif|include|error|warning|line)"), options );
-	myFortranRegEx[wxT("regexPreprocessorCoCo")] = new wxRegEx( wxT("^\\?\\?\\s+"), options );
+	myFortranRegEx[wxT("regexPreprocessorC")] = new wxRegEx( wxT("^#(define|undef|ifdef|ifndef|if|elif|else|endif|include|error|warning|line)"), options );
 
 }
 
@@ -330,13 +329,9 @@ bool CMyWxFortranIndent::getIsHasPreprocessor( const wxString & srcLine, int iPr
     {
         case PreprocessorType_NoPreprocessor:
             break;
-        case PreprocessorType_IntelFortran:
-            wxASSERT( myFortranRegEx[wxT("regexPreprocessorIntel")] );
-            bRet = myFortranRegEx[wxT("regexPreprocessorIntel")]->Matches( srcLine );
-            break;
-        case PreprocessorType_CoCo:
-            wxASSERT( myFortranRegEx[wxT("regexPreprocessorCoCo")] );
-            bRet = myFortranRegEx[wxT("regexPreprocessorCoCo")]->Matches( srcLine );
+        case PreprocessorType_CPreprocessor:
+            wxASSERT( myFortranRegEx[wxT("regexPreprocessorC")] );
+            bRet = myFortranRegEx[wxT("regexPreprocessorC")]->Matches( srcLine );
             break;
         default :
             break;

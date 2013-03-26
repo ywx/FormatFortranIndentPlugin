@@ -13,7 +13,7 @@
 
 enum PreprocessorType
 {
-    PreprocessorType_NoPreprocessor, PreprocessorType_IntelFortran, PreprocessorType_CoCo
+    PreprocessorType_NoPreprocessor, PreprocessorType_CPreprocessor
 };
 
 struct CMyFortranIndentConfig

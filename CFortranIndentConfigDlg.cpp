@@ -13,6 +13,7 @@
 #include <wx/xrc/xmlres.h>
 #include <wx/checkbox.h>
 #include <wx/spinctrl.h>
+#include <wx/radiobox.h>
 #include <string>
 
 BEGIN_EVENT_TABLE( CFortranIndentConfigDlg, wxPanel )
