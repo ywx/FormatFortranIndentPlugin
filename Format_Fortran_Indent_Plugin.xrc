@@ -5,59 +5,83 @@
 		<object class="wxBoxSizer">
 			<orient>wxVERTICAL</orient>
 			<object class="sizeritem">
-				<object class="wxCheckBox" name="cb_SameAsEditor">
-					<label>Config Same As CB Editor</label>
-					<checked>1</checked>
-				</object>
-				<flag>wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_TOP</flag>
-				<border>8</border>
-			</object>
-			<object class="sizeritem">
-				<object class="wxCheckBox" name="cb_UseTab">
-					<label>Use Tabs instead of spaces</label>
-					<checked>1</checked>
-				</object>
-				<flag>wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_TOP</flag>
-				<border>8</border>
-			</object>
-			<object class="sizeritem">
-				<object class="wxBoxSizer">
+				<object class="wxStaticBoxSizer">
+					<label>Tab Options</label>
+					<orient>wxVERTICAL</orient>
 					<object class="sizeritem">
-						<object class="wxStaticText" name="wxID_STATIC">
-							<label>Indentation size (in spaces):</label>
+						<object class="wxCheckBox" name="cb_SameAsEditor">
+							<label>Config Same As CB Editor</label>
+							<checked>1</checked>
 						</object>
-						<flag>wxLEFT|wxTOP|wxALIGN_LEFT|wxALIGN_TOP</flag>
+						<flag>wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_TOP</flag>
 						<border>8</border>
 					</object>
 					<object class="sizeritem">
-						<object class="wxSpinCtrl" name="sp_TabWidth">
-							<value>4</value>
-							<min>2</min>
-							<max>12</max>
+						<object class="wxCheckBox" name="cb_UseTab">
+							<label>Use Tabs instead of spaces</label>
+							<checked>1</checked>
 						</object>
-						<flag>wxLEFT|wxALIGN_LEFT|wxALIGN_TOP</flag>
+						<flag>wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_TOP</flag>
 						<border>8</border>
 					</object>
+					<object class="sizeritem">
+						<object class="wxBoxSizer">
+							<object class="sizeritem">
+								<object class="wxStaticText" name="wxID_STATIC">
+									<label>Indentation size (in spaces):</label>
+								</object>
+								<flag>wxTOP|wxLEFT|wxALIGN_LEFT|wxALIGN_TOP</flag>
+								<border>8</border>
+							</object>
+							<object class="sizeritem">
+								<object class="wxSpinCtrl" name="sp_TabWidth">
+									<value>4</value>
+									<min>2</min>
+									<max>12</max>
+								</object>
+								<flag>wxLEFT|wxALIGN_LEFT|wxALIGN_TOP</flag>
+								<border>8</border>
+							</object>
+						</object>
+						<flag>wxALIGN_LEFT|wxALIGN_TOP</flag>
+					</object>
 				</object>
-				<flag>wxALIGN_LEFT|wxALIGN_TOP</flag>
-			</object>
-			<object class="sizeritem">
-                <object class="wxStaticLine" name="ID_STATICLINE1" />
-                <flag>wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL</flag>
-                <border>8</border>
-            </object>
-			<object class="sizeritem">
-				<object class="wxCheckBox" name="cb_KeepBlankLineOnly">
-					<label>Keep Blank Line Only</label>
-				</object>
-				<flag>wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_TOP</flag>
+				<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND|wxALIGN_LEFT|wxALIGN_TOP</flag>
 				<border>8</border>
 			</object>
 			<object class="sizeritem">
-				<object class="wxCheckBox" name="cb_TrimLineFromRight">
-					<label>Trim Line From Right</label>
+				<object class="wxStaticBoxSizer">
+					<label>Orther Options</label>
+					<orient>wxVERTICAL</orient>
+					<object class="sizeritem">
+						<object class="wxCheckBox" name="cb_KeepBlankLineOnly">
+							<label>Keep Blank Line Only</label>
+						</object>
+						<flag>wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_TOP</flag>
+						<border>8</border>
+					</object>
+					<object class="sizeritem">
+						<object class="wxCheckBox" name="cb_TrimLineFromRight">
+							<label>Trim Line From Right</label>
+						</object>
+						<flag>wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_TOP</flag>
+						<border>8</border>
+					</object>
 				</object>
-				<flag>wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_TOP</flag>
+				<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND|wxALIGN_LEFT|wxALIGN_TOP</flag>
+				<border>8</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxRadioBox" name="rb_PreprocessorType">
+					<label>Preprocessor Type</label>
+					<content>
+						<item>None</item>
+						<item>Intel Fortran Preprocessor</item>
+						<item>CoCo Preprocessor ISO/IEC 1539-3:1998</item>
+					</content>
+					<default>-1</default>
+				</object>
+				<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND|wxALIGN_LEFT|wxALIGN_TOP</flag>
 				<border>8</border>
 			</object>
 		</object>

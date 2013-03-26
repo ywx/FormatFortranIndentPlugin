@@ -12,6 +12,7 @@
 #include <configurationpanel.h>
 #include "Format_Fortran_Indent_Plugin.h"
 #include "CFortranIndentConfigDlg.h"
+#include "CMyFortranIndentConfig.h"
 
 #include <wx/progdlg.h>
 #include "cbstyledtextctrl.h"
@@ -305,7 +306,7 @@ int Format_Fortran_Indent_Plugin::Execute()
     if( ! isFortranFilename( ed->GetFilename() ) )
 	{
         if( cbMessageBox( wxT("Are you sure \n") + ed->GetFilename() +
-            wxT("\n is a Fortran Source File?\nContinue to Format the Indent?"), _("Error Message"),
+            wxT("\nis a Fortran Free Format Source File?\nContinue to Format the Indent?"), _("Error Message"),
             wxICON_QUESTION | wxYES_NO | wxNO_DEFAULT ) == wxID_NO )
             return 0;
 	}
@@ -376,6 +377,7 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
 		cfg->Read( _T("i_TabWidth"), & myFortranIndentConfig.iTabWidth );
 		cfg->Read( _T("is_KeepBlankLineOnly"), & myFortranIndentConfig.isKeepBlankLineOnly );
 		cfg->Read( _T("is_TrimLineFromRight"), & myFortranIndentConfig.isTrimLineFromRight );
+		cfg->Read( _T("i_PreprocessorType"), & myFortranIndentConfig.iPreprocessorType );
 	}
 
     bool isOnlyBlankLine = myFortranIndentConfig.isKeepBlankLineOnly;
@@ -478,9 +480,23 @@ bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
         }
 
         isCur = true;
-        tmpLine = control->GetLine( i ).Trim(false); // trim from left
+        tmpLine = control->GetLine( i );
 
+        if( myWxFortranIndent.getIsHasPreprocessor( tmpLine, myFortranIndentConfig.iPreprocessorType ) )
+        {
+            if( isTrimLineFromRight )
+            {
+                tmpLine.Trim(); //trim from right
+                if( i < indexLineEnd )
+                {
+                    tmpLine += eolChars;
+                }
+            }
+            formattedText += tmpLine;
+            continue;
+        }
 
+        tmpLine = tmpLine.Trim(false); // trim from left
         if( myWxFortranIndent.getIsHasLineContinuation( tmpLine ) )
         {
             wxString tempLine;

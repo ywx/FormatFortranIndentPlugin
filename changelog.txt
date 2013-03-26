@@ -1,6 +1,14 @@
 ﻿ChangeLog for Format Fortran Indent Plugin
 ------------------------------------------
 
+Version 0.2.3 2013-3-26
+=====================
+Add the support for Preprocessor that Petros Aristidou<p3tris@gmail.com> need
+
+Add CMyFortranIndentConfig.h and CMyFortranIndentConfig.cpp for CMyFortranIndentConfig struct
+Add cbReleaseCentOS-x86_64 branch
+Update readme
+
 Version 0.2.3 2013-3-14
 =====================
 Update the support on "function" statement
@@ -144,6 +152,14 @@ Create GitHub repository. https://github.com/ywx/FormatFortranIndentPlugin
 
 更新历史：
 ---------
+
+v0.2.3 2013-3-26
+=================
+应 Petros Aristidou<p3tris@gmail.com> 要求，增加 Preprocessor 支持
+
+为 CMyFortranIndentConfig struct 分离出 CMyFortranIndentConfig.h 和 CMyFortranIndentConfig.cpp
+增加 cbReleaseCentOS-x86_64 branch
+更新 readme
 
 v0.2.3 2013-3-14
 ================

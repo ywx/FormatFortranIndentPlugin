@@ -14,30 +14,6 @@
 #include "configurationpanel.h"
 
 
-struct CMyFortranIndentConfig
-{
-	bool isSameAsEditor;
-	bool isUseTab;
-	int  iTabWidth;
-	bool isKeepBlankLineOnly;
-	bool isTrimLineFromRight;
-
-	CMyFortranIndentConfig()
-	{
-		reset();
-	}
-
-	void reset()
-	{
-		isSameAsEditor = true;
-		isUseTab = false;
-		iTabWidth = 4;
-		isKeepBlankLineOnly = false;
-		isTrimLineFromRight = false;
-	}
-};
-
-
 class CFortranIndentConfigDlg : public cbConfigurationPanel
 {
 	public:

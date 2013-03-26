@@ -40,6 +40,7 @@ void CFortranIndentConfigDlg::LoadSettings()
 	int  iTabWidth = 4;
 	bool isKeepBlankLineOnly = false;
 	bool isTrimLineFromRight = false;
+	int iPreprocessorType = 0;
 
 	if( cfg->Read( _T("is_SameAsEditor"), & isSameAsEditor ) )
 	{
@@ -47,6 +48,7 @@ void CFortranIndentConfigDlg::LoadSettings()
 		cfg->Read( _T("i_TabWidth"), & iTabWidth );
 		cfg->Read( _T("is_KeepBlankLineOnly"), & isKeepBlankLineOnly );
 		cfg->Read( _T("is_TrimLineFromRight"), & isTrimLineFromRight );
+		cfg->Read( _T("i_PreprocessorType"), & iPreprocessorType );
 	}
 
     XRCCTRL(*this, "cb_SameAsEditor", wxCheckBox)->SetValue( isSameAsEditor );
@@ -56,6 +58,7 @@ void CFortranIndentConfigDlg::LoadSettings()
 	XRCCTRL(*this, "sp_TabWidth", wxCheckBox)->Enable( ! ( isSameAsEditor || isUseTab ) );
     XRCCTRL(*this, "cb_KeepBlankLineOnly", wxCheckBox)->SetValue( isKeepBlankLineOnly );
     XRCCTRL(*this, "cb_TrimLineFromRight", wxCheckBox)->SetValue( isTrimLineFromRight );
+    XRCCTRL(*this, "rb_PreprocessorType", wxRadioBox)->SetSelection( iPreprocessorType );
 }
 
 void CFortranIndentConfigDlg::SaveSettings()
@@ -67,6 +70,7 @@ void CFortranIndentConfigDlg::SaveSettings()
 	cfg->Write(_T("i_TabWidth"), (int) XRCCTRL(*this, "sp_TabWidth", wxSpinCtrl)->GetValue());
 	cfg->Write(_T("is_KeepBlankLineOnly"), (bool) XRCCTRL(*this, "cb_KeepBlankLineOnly", wxCheckBox)->GetValue());
     cfg->Write(_T("is_TrimLineFromRight"), (bool) XRCCTRL(*this, "cb_TrimLineFromRight", wxCheckBox)->GetValue());
+    cfg->Write(_T("i_PreprocessorType"), (int) XRCCTRL(*this, "rb_PreprocessorType", wxRadioBox)->GetSelection());
 }
 
 void CFortranIndentConfigDlg::OnIsSameAsEditorClick(wxCommandEvent& event)

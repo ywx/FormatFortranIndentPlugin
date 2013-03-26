@@ -38,6 +38,7 @@ public:
 
 	bool BuffersDiffer( const wxString &a, const wxString &b, const wxString &eolChars,const bool isDelBlank=true );
 	bool getIsHasLineContinuation( const wxString & srcLine );
+	bool getIsHasPreprocessor( const wxString & srcLine, int iPreprocessorType );
 	void delLineContinuation( wxString & srcLine );
 	void delComment( wxString & srcLine );
 	void getFortranIndentLine( const wxString & src, int & indentNum, bool & isCur, bool & isCaseBegin );

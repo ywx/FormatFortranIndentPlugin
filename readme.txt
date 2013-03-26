@@ -1,6 +1,6 @@
 ﻿Format Fortran Indent Plugin
 ----------------------------
-A Code::Blocks Plugin to Format Source Code Indent for Fortran 95, Fortran 90 Source Code (free source form).
+A Code::Blocks Plugin to Format Source Code Indent for Fortran 95, Fortran 90 Source Code ( Free Format ).
 
 NOTE: It could not completely support "type", "function", "subroutine" statement. It could not support nonblock-do-construct. There are some known bugs in "if", "for", "forall", "where" statement in some cases.
 
@@ -29,7 +29,7 @@ For information on Git，please see http://git-scm.com/ or https://github.com/gi
 For information on Git for Windows，please see http://code.google.com/p/msysgit/
 For information on TortoiseGit，please see http://code.google.com/p/tortoisegit/
 
-Format_Fortran_Indent_Plugin.cbplugin for Windows in repository is compiled by MinGW TDM-GCC with wxWidgets and Code::Blocks SDK. cbRelease branch is built for Code::Blocks Release for Windows. cbFortran branch is built for Code::Blocks IDE for Fortran for Windows. cbReleaseCentOS branch is built for Code::Blocks Release for Linux CentOS. Keep source code for project only in master branch.
+Format_Fortran_Indent_Plugin.cbplugin for Windows in repository is compiled by MinGW TDM-GCC with wxWidgets and Code::Blocks SDK. cbRelease branch is built for Code::Blocks Release for Windows. cbFortran branch is built for Code::Blocks IDE for Fortran for Windows. cbReleaseCentOS-i686 branch is built for Code::Blocks Release for Linux CentOS i686. cbReleaseCentOS-x86_64 branch is built for Code::Blocks Release for Linux CentOS x86_64. Keep source code for project only in master branch.
 
 Compilers and Options ( for Windows )
 =====================================
@@ -50,7 +50,7 @@ Compilers and Options ( for Linux CentOS )
 =====================================
 1, Install wxBase, wxGTK and xterm for Code::Blocks.
 2, Please download Code::Blocks for CentOS, to set up develop IDE.
-3, Install gcc, wxGTK-devel, codeblocks-devel and codeblocks-contrib-devel to build Code::Blocks Plugin.
+3, Install gcc-g++, wxGTK-devel, codeblocks-devel and codeblocks-contrib-devel to build Code::Blocks Plugin.
 4, Please download Format Fortran Indent Plugin source code, to be compiled in Code::Blocks under "Linux Release" or "Linux default" Build targer.
 
 For information on CentOS, please see http://www.centos.org
@@ -61,7 +61,7 @@ For information on Code::Blocks Plug-In development, please see http://wiki.code
 For information on Code::Blocks IDE for Fortran, please see http://darmar.vgtu.lt/ or http://code.google.com/p/fortranproject/
 
 
-Last updated: March 13th 2013
+Last updated: March 26th 2013
 
 
 
@@ -89,9 +89,9 @@ git clone git://github.com/ywx/FormatFortranIndentPlugin.git FormatFortranIndent
 关于 Git for Windows，请访问 http://code.google.com/p/msysgit/
 关于 TortoiseGit，请访问 http://code.google.com/p/tortoisegit/
 
-仓库上的 Windows 版 Format_Fortran_Indent_Plugin.cbplugin 基于 wxWidgets 和 Code::Blocks SDK 由 MinGW TDM-GCC 编译生成。cbRelease 分支适用于 Code::Blocks Release for Windows 版本。cbFortran 分支适用于 Code::Blocks IDE for Fortran for Windows 版本。cbReleaseCentOS 分支适用于 Code::Blocks Release for Linux CentOS 版本。master 分支只保留用于项目构建的源代码。
+仓库上的 Windows 版 Format_Fortran_Indent_Plugin.cbplugin 基于 wxWidgets 和 Code::Blocks SDK 由 MinGW TDM-GCC 编译生成。cbRelease 分支适用于 Code::Blocks Release for Windows 版本。cbFortran 分支适用于 Code::Blocks IDE for Fortran for Windows 版本。cbReleaseCentOS-i686 分支适用于 Code::Blocks Release for Linux CentOS i686 版本。cbReleaseCentOS-x86_64 分支适用于 Code::Blocks Release for Linux CentOS x86_64 版本。master 分支只保留用于项目构建的源代码。
 
-编译插件（在Windows下）：
+编译插件（在 Windows 下）：
 ========================
 1，Windows 最好请用 MinGW 编译器和 Code::Blocks 集成开发环境。
 2，请下载 wxWidgets 源代码，编译生成单一的动态链接库SDK。
@@ -106,11 +106,11 @@ git clone git://github.com/ywx/FormatFortranIndentPlugin.git FormatFortranIndent
 关于 Code::Blocks IDE for Fortran，请访问 http://darmar.vgtu.lt/ 或 http://code.google.com/p/fortranproject/
 
 
-Compilers and Options ( for Linux CentOS )
+编译插件（在 Linux CentOS 下）
 =====================================
-1, 安装 Code::Blocks 前，先安装 wxBase 和 wxGTK 运行包 及 xterm 。
-2, 下载 Code::Blocks for CentOS 并安装，构建开发 IDE。
-3, 安装 gcc, wxGTK-devel, codeblocks-devel 和 codeblocks-contrib-devel 开发包，用于编译 Code::Blocks Plugin。
+1, 安装 Code::Blocks 前，先安装相应 wxBase 和 wxGTK 运行包 及 xterm 。
+2, 下载相应 Code::Blocks for CentOS 并安装，构建开发 IDE。
+3, 安装 gcc-g++, wxGTK-devel, codeblocks-devel 和 codeblocks-contrib-devel 开发包，用于编译 Code::Blocks Plugin。
 4, 请从上述代码仓库下载 Format Fortran Indent Plugin 源代码。用 Code::Blocks 在 "Linux Release" 或 "Linux default" Build targer 下编译。
 
 关于 CentOS，请访问 see http://www.centos.org
@@ -124,4 +124,4 @@ Compilers and Options ( for Linux CentOS )
 Format Fortran Indent Plugin 只是运用正则表达式对源代码进行以行为单位的模式匹配，然后进行代码缩进格式化。所以它只能支持Fortran 95, Fortran 90语法中的一个子集。目前它还不能完美支持 type, function, subroutine 等语句，也不能支持 nonblock-do-construct 。有空的话，我会完善它。希望大家也来关心它，培养它。更希望有人能从编译原理方向重塑它。
 
 
-最后更新: 2013-3-13
+最后更新: 2013-3-26
