@@ -303,7 +303,8 @@ int Format_Fortran_Indent_Plugin::Execute()
     if (!ed)
         return 0;
 
-    if( ! isFortranFilename( ed->GetFilename() ) )
+    cbStyledTextCtrl* control = ed->GetControl();
+    if( ( ! isFortranFilename( ed->GetFilename() ) ) && ( wxSCI_LEX_FORTRAN != control->GetLexer() ) )
 	{
         if( cbMessageBox( wxT("Are you sure \n") + ed->GetFilename() +
             wxT("\nis a Fortran Free Format Source File?\nContinue to Format the Indent?"), _("Error Message"),

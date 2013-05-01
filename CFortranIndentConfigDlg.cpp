@@ -9,6 +9,7 @@
 
 #include <sdk.h>
 #include "CFortranIndentConfigDlg.h"
+#include "CMyFortranIndentConfig.h"
 #include <configmanager.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/checkbox.h>
@@ -36,30 +37,25 @@ void CFortranIndentConfigDlg::LoadSettings()
 {
 	ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("fortran_indent"));
 
-	bool isSameAsEditor = true;
-	bool isUseTab = false;
-	int  iTabWidth = 4;
-	bool isKeepBlankLineOnly = false;
-	bool isTrimLineFromRight = false;
-	int iPreprocessorType = 0;
+	CMyFortranIndentConfig myFortranIndentConfig;
 
-	if( cfg->Read( _T("is_SameAsEditor"), & isSameAsEditor ) )
+	if( cfg->Read( _T("is_SameAsEditor"), & myFortranIndentConfig.isSameAsEditor ) )
 	{
-		cfg->Read( _T("is_UseTab"), & isUseTab );
-		cfg->Read( _T("i_TabWidth"), & iTabWidth );
-		cfg->Read( _T("is_KeepBlankLineOnly"), & isKeepBlankLineOnly );
-		cfg->Read( _T("is_TrimLineFromRight"), & isTrimLineFromRight );
-		cfg->Read( _T("i_PreprocessorType"), & iPreprocessorType );
+		cfg->Read( _T("is_UseTab"), & myFortranIndentConfig.isUseTab );
+		cfg->Read( _T("i_TabWidth"), & myFortranIndentConfig.iTabWidth );
+		cfg->Read( _T("is_KeepBlankLineOnly"), & myFortranIndentConfig.isKeepBlankLineOnly );
+		cfg->Read( _T("is_TrimLineFromRight"), & myFortranIndentConfig.isTrimLineFromRight );
+		cfg->Read( _T("i_PreprocessorType"), & myFortranIndentConfig.iPreprocessorType );
 	}
 
-    XRCCTRL(*this, "cb_SameAsEditor", wxCheckBox)->SetValue( isSameAsEditor );
-    XRCCTRL(*this, "cb_UseTab", wxCheckBox)->SetValue( isUseTab );
-	XRCCTRL(*this, "cb_UseTab", wxCheckBox)->Enable( ! isSameAsEditor );
-    XRCCTRL(*this, "sp_TabWidth", wxSpinCtrl)->SetValue( iTabWidth );
-	XRCCTRL(*this, "sp_TabWidth", wxCheckBox)->Enable( ! ( isSameAsEditor || isUseTab ) );
-    XRCCTRL(*this, "cb_KeepBlankLineOnly", wxCheckBox)->SetValue( isKeepBlankLineOnly );
-    XRCCTRL(*this, "cb_TrimLineFromRight", wxCheckBox)->SetValue( isTrimLineFromRight );
-    XRCCTRL(*this, "rb_PreprocessorType", wxRadioBox)->SetSelection( iPreprocessorType );
+    XRCCTRL(*this, "cb_SameAsEditor", wxCheckBox)->SetValue( myFortranIndentConfig.isSameAsEditor );
+    XRCCTRL(*this, "cb_UseTab", wxCheckBox)->SetValue( myFortranIndentConfig.isUseTab );
+	XRCCTRL(*this, "cb_UseTab", wxCheckBox)->Enable( ! myFortranIndentConfig.isSameAsEditor );
+    XRCCTRL(*this, "sp_TabWidth", wxSpinCtrl)->SetValue( myFortranIndentConfig.iTabWidth );
+	XRCCTRL(*this, "sp_TabWidth", wxCheckBox)->Enable( ! ( myFortranIndentConfig.isSameAsEditor || myFortranIndentConfig.isUseTab ) );
+    XRCCTRL(*this, "cb_KeepBlankLineOnly", wxCheckBox)->SetValue( myFortranIndentConfig.isKeepBlankLineOnly );
+    XRCCTRL(*this, "cb_TrimLineFromRight", wxCheckBox)->SetValue( myFortranIndentConfig.isTrimLineFromRight );
+    XRCCTRL(*this, "rb_PreprocessorType", wxRadioBox)->SetSelection( myFortranIndentConfig.iPreprocessorType );
 }
 
 void CFortranIndentConfigDlg::SaveSettings()

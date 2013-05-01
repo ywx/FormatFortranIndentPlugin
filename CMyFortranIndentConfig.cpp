@@ -17,5 +17,5 @@ void CMyFortranIndentConfig::reset()
 	iTabWidth = 4;
 	isKeepBlankLineOnly = false;
 	isTrimLineFromRight = false;
-	iPreprocessorType = PreprocessorType_NoPreprocessor; // PreprocessorType_None = 0
+	iPreprocessorType = PreprocessorType_CPreprocessor; // PreprocessorType_None = 0
 }
