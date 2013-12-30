@@ -231,7 +231,7 @@ bool Format_Fortran_Indent_Plugin::isFortranFilename( const wxString & filename 
 void Format_Fortran_Indent_Plugin::OnFormatProject( wxCommandEvent& /*event*/ )
 {
     ProjectManager* manager = Manager::Get()->GetProjectManager();
-    wxTreeCtrl *tree = manager->GetTree();
+    wxTreeCtrl *tree = manager->GetUI().GetTree();
 
     if ( !tree )
         return;
