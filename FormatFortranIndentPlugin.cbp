@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Win32 Release">
-				<Option output="Format_Fortran_Indent_Plugin" prefix_auto="0" extension_auto="1" />
+				<Option output="FormatFortranIndentPlugin" prefix_auto="0" extension_auto="1" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option host_application="$(#cb)/devel/codeblocks.exe" />
@@ -40,13 +40,13 @@
 					<Add directory="$(#wx.lib)/gcc_dll" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="zip -j9 Format_Fortran_Indent_Plugin.zip manifest.xml Format_Fortran_Indent_Plugin.xrc" />
-					<Add after="zip -j9 Format_Fortran_Indent_Plugin.cbplugin Format_Fortran_Indent_Plugin.dll Format_Fortran_Indent_Plugin.zip Format_Fortran_Indent_Plugin.png Format_Fortran_Indent_Plugin-off.png" />
+					<Add after="zip -j9 FormatFortranIndentPlugin.zip manifest.xml FormatFortranIndentPlugin.xrc" />
+					<Add after="zip -j9 FormatFortranIndentPlugin.cbplugin FormatFortranIndentPlugin.dll FormatFortranIndentPlugin.zip FormatFortranIndentPlugin.png FormatFortranIndentPlugin-off.png" />
 					<Mode after="always" />
 				</ExtraCommands>
 			</Target>
 			<Target title="Win32 Debug">
-				<Option output="Format_Fortran_Indent_Plugin" prefix_auto="0" extension_auto="1" />
+				<Option output="FormatFortranIndentPlugin" prefix_auto="0" extension_auto="1" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option host_application="$(#cb)/devel/codeblocks.exe" />
@@ -79,18 +79,19 @@
 					<Add directory="$(#wx.lib)/gcc_dll" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="zip -j9 Format_Fortran_Indent_Plugin.zip manifest.xml Format_Fortran_Indent_Plugin.xrc" />
-					<Add after="zip -j9 Format_Fortran_Indent_Plugin.cbplugin Format_Fortran_Indent_Plugin.dll Format_Fortran_Indent_Plugin.zip Format_Fortran_Indent_Plugin.png Format_Fortran_Indent_Plugin-off.png" />
+					<Add after="zip -j9 FormatFortranIndentPlugin.zip manifest.xml FormatFortranIndentPlugin.xrc" />
+					<Add after="zip -j9 FormatFortranIndentPlugin.cbplugin FormatFortranIndentPlugin.dll FormatFortranIndentPlugin.zip FormatFortranIndentPlugin.png FormatFortranIndentPlugin-off.png" />
 					<Mode after="always" />
 				</ExtraCommands>
 			</Target>
 			<Target title="Linux Release">
-				<Option output="Format_Fortran_Indent_Plugin" prefix_auto="0" extension_auto="1" />
+				<Option output="FormatFortranIndentPlugin" prefix_auto="0" extension_auto="1" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option host_application="codeblocks" />
 				<Option run_host_application_in_terminal="0" />
 				<Compiler>
+					<Add option="-ansi" />
 					<Add option="-O2" />
 					<Add option="`pkg-config --cflags codeblocks`" />
 					<Add option="`wx-config --cflags`" />
@@ -98,6 +99,8 @@
 					<Add option="-DEXPORT_FUNC" />
 					<Add directory="$(#cb)/include" />
 					<Add directory="$(#cb)/sdk/wxscintilla/include" />
+					<Add directory="$(#cb)/include/codeblocks" />
+					<Add directory="$(#cb)/include/codeblocks/wxscintilla/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -105,18 +108,19 @@
 					<Add option="`wx-config --libs`" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="zip -j9 Format_Fortran_Indent_Plugin.zip manifest.xml Format_Fortran_Indent_Plugin.xrc" />
-					<Add after="zip -j9 Format_Fortran_Indent_Plugin.cbplugin Format_Fortran_Indent_Plugin.so Format_Fortran_Indent_Plugin.zip  Format_Fortran_Indent_Plugin.png Format_Fortran_Indent_Plugin-off.png" />
+					<Add after="zip -j9 FormatFortranIndentPlugin.zip manifest.xml FormatFortranIndentPlugin.xrc" />
+					<Add after="zip -j9 FormatFortranIndentPlugin.cbplugin FormatFortranIndentPlugin.so FormatFortranIndentPlugin.zip  FormatFortranIndentPlugin.png FormatFortranIndentPlugin-off.png" />
 					<Mode after="always" />
 				</ExtraCommands>
 			</Target>
 			<Target title="Linux default">
-				<Option output="Format_Fortran_Indent_Plugin" prefix_auto="0" extension_auto="1" />
+				<Option output="FormatFortranIndentPlugin" prefix_auto="0" extension_auto="1" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option host_application="codeblocks" />
 				<Option run_host_application_in_terminal="0" />
 				<Compiler>
+					<Add option="-ansi" />
 					<Add option="-g" />
 					<Add option="`pkg-config --cflags codeblocks`" />
 					<Add option="`wx-config --cflags`" />
@@ -124,14 +128,16 @@
 					<Add option="-DEXPORT_FUNC" />
 					<Add directory="$(#cb)/include" />
 					<Add directory="$(#cb)/sdk/wxscintilla/include" />
+					<Add directory="$(#cb)/include/codeblocks" />
+					<Add directory="$(#cb)/include/codeblocks/wxscintilla/include" />
 				</Compiler>
 				<Linker>
 					<Add option="`pkg-config --libs codeblocks`" />
 					<Add option="`wx-config --libs`" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="zip -j9 Format_Fortran_Indent_Plugin.zip manifest.xml Format_Fortran_Indent_Plugin.xrc" />
-					<Add after="zip -j9 Format_Fortran_Indent_Plugin.cbplugin Format_Fortran_Indent_Plugin.so Format_Fortran_Indent_Plugin.zip  Format_Fortran_Indent_Plugin.png Format_Fortran_Indent_Plugin-off.png" />
+					<Add after="zip -j9 FormatFortranIndentPlugin.zip manifest.xml FormatFortranIndentPlugin.xrc" />
+					<Add after="zip -j9 FormatFortranIndentPlugin.cbplugin FormatFortranIndentPlugin.so FormatFortranIndentPlugin.zip  FormatFortranIndentPlugin.png FormatFortranIndentPlugin-off.png" />
 					<Mode after="always" />
 				</ExtraCommands>
 			</Target>
@@ -142,11 +148,11 @@
 		<Unit filename="CMyFortranIndentConfig.h" />
 		<Unit filename="CMyWxFortranIndent.cpp" />
 		<Unit filename="CMyWxFortranIndent.h" />
-		<Unit filename="Format_Fortran_Indent_Plugin-off.png" />
-		<Unit filename="Format_Fortran_Indent_Plugin.cpp" />
-		<Unit filename="Format_Fortran_Indent_Plugin.h" />
-		<Unit filename="Format_Fortran_Indent_Plugin.png" />
-		<Unit filename="Format_Fortran_Indent_Plugin.xrc" />
+		<Unit filename="FormatFortranIndentPlugin-off.png" />
+		<Unit filename="FormatFortranIndentPlugin.cpp" />
+		<Unit filename="FormatFortranIndentPlugin.h" />
+		<Unit filename="FormatFortranIndentPlugin.png" />
+		<Unit filename="FormatFortranIndentPlugin.xrc" />
 		<Unit filename="manifest.xml" />
 		<Extensions>
 			<code_completion />

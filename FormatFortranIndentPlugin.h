@@ -1,6 +1,6 @@
 /***************************************************************
- * Name:      Format_Fortran_Indent_Plugin.h
- * Purpose:   declaration of Code::Blocks plugin Format_Fortran_Indent_Plugin
+ * Name:      FormatFortranIndentPlugin.h
+ * Purpose:   declaration of Code::Blocks plugin FormatFortranIndentPlugin
  * Author:    YWX (wxFortranIndent@163.com)
  * Created:   2011-12-22
  * Copyright: (c) YWX <wxFortranIndent@163.com>
@@ -49,14 +49,14 @@ public :
 
 
 
-//class Format_Fortran_Indent_Plugin : public cbToolPlugin
-class Format_Fortran_Indent_Plugin : public cbPlugin
+//class FormatFortranIndentPlugin : public cbToolPlugin
+class FormatFortranIndentPlugin : public cbPlugin
 {
 public:
     /** Constructor. */
-    Format_Fortran_Indent_Plugin();
+    FormatFortranIndentPlugin();
     /** Destructor. */
-    virtual ~Format_Fortran_Indent_Plugin();
+    virtual ~FormatFortranIndentPlugin();
 
     /** Invoke configuration dialog. */
     virtual int Configure();
