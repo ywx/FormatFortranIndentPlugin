@@ -1,5 +1,5 @@
 /***************************************************************
- * Name:      Format_Fortran_Indent_Plugin.cpp
+ * Name:      FormatFortranIndentPlugin.cpp
  * Purpose:   Code::Blocks Plugin to Format Source Code Indent
  * in Fortran 95, Fortran 90 Source Code (free source form)
  * Author:    YWX (wxFortranIndent@163.com)
@@ -10,7 +10,7 @@
 
 #include <sdk.h> // Code::Blocks SDK
 #include <configurationpanel.h>
-#include "Format_Fortran_Indent_Plugin.h"
+#include "FormatFortranIndentPlugin.h"
 #include "CFortranIndentConfigDlg.h"
 #include "CMyFortranIndentConfig.h"
 
@@ -36,36 +36,36 @@ namespace
     const int idCodeFortranIndentProject = wxNewId();
 }
 
-BEGIN_EVENT_TABLE( Format_Fortran_Indent_Plugin, cbPlugin )
-    EVT_MENU( idCodeFortranIndentActiveFile, Format_Fortran_Indent_Plugin::OnFormatActiveFile )
-    EVT_MENU( idCodeFortranIndentProject, Format_Fortran_Indent_Plugin::OnFormatProject )
+BEGIN_EVENT_TABLE( FormatFortranIndentPlugin, cbPlugin )
+    EVT_MENU( idCodeFortranIndentActiveFile, FormatFortranIndentPlugin::OnFormatActiveFile )
+    EVT_MENU( idCodeFortranIndentProject, FormatFortranIndentPlugin::OnFormatProject )
 END_EVENT_TABLE()
 
 // Register the plugin with Code::Blocks.
 // We are using an anonymous namespace so we don't litter the global one.
 namespace
 {
-    PluginRegistrant<Format_Fortran_Indent_Plugin> reg(_T("Format_Fortran_Indent_Plugin"));
+    PluginRegistrant<FormatFortranIndentPlugin> reg(_T("FormatFortranIndentPlugin"));
 }
 
 // constructor
-Format_Fortran_Indent_Plugin::Format_Fortran_Indent_Plugin()
+FormatFortranIndentPlugin::FormatFortranIndentPlugin()
 {
     // Make sure our resources are available.
     // In the generated boilerplate code we have no resources but when
     // we add some, it will be nice that this code is in place already ;)
-    if(!Manager::LoadResource(_T("Format_Fortran_Indent_Plugin.zip")))
+    if(!Manager::LoadResource(_T("FormatFortranIndentPlugin.zip")))
     {
-        NotifyMissingFile(_T("Format_Fortran_Indent_Plugin.zip"));
+        NotifyMissingFile(_T("FormatFortranIndentPlugin.zip"));
     }
 }
 
 // destructor
-Format_Fortran_Indent_Plugin::~Format_Fortran_Indent_Plugin()
+FormatFortranIndentPlugin::~FormatFortranIndentPlugin()
 {
 }
 
-void Format_Fortran_Indent_Plugin::OnAttach()
+void FormatFortranIndentPlugin::OnAttach()
 {
     // do whatever initialization you need for your plugin
     // NOTE: after this function, the inherited member variable
@@ -75,7 +75,7 @@ void Format_Fortran_Indent_Plugin::OnAttach()
     // (see: does not need) this plugin...
 }
 
-void Format_Fortran_Indent_Plugin::OnRelease(bool appShutDown)
+void FormatFortranIndentPlugin::OnRelease(bool appShutDown)
 {
     // do de-initialization for your plugin
     // if appShutDown is true, the plugin is unloaded because Code::Blocks is being shut down,
@@ -84,7 +84,7 @@ void Format_Fortran_Indent_Plugin::OnRelease(bool appShutDown)
     // m_IsAttached will be FALSE...
 }
 
-int Format_Fortran_Indent_Plugin::Configure()
+int FormatFortranIndentPlugin::Configure()
 {
     //create and display the configuration dialog for your plugin
     //cbConfigurationDialog dlg(Manager::Get()->GetAppWindow(), wxID_ANY, _("Your dialog title"));
@@ -99,7 +99,7 @@ int Format_Fortran_Indent_Plugin::Configure()
     return 0;
 }
 
-cbConfigurationPanel* Format_Fortran_Indent_Plugin::GetConfigurationPanel(wxWindow* parent)
+cbConfigurationPanel* FormatFortranIndentPlugin::GetConfigurationPanel(wxWindow* parent)
 {
     CFortranIndentConfigDlg* dlg = new CFortranIndentConfigDlg(parent);
     // deleted by the caller
@@ -107,7 +107,7 @@ cbConfigurationPanel* Format_Fortran_Indent_Plugin::GetConfigurationPanel(wxWind
     return dlg;
 }
 
-void Format_Fortran_Indent_Plugin::BuildMenu(wxMenuBar* menuBar)
+void FormatFortranIndentPlugin::BuildMenu(wxMenuBar* menuBar)
 {
     //The application is offering its menubar for your plugin,
     //to add any menu items you want...
@@ -152,11 +152,11 @@ void Format_Fortran_Indent_Plugin::BuildMenu(wxMenuBar* menuBar)
         Manager::Get()->GetLogManager()->Log( _("Could not find Plugins Menu!") );
     }
     //NOTE: Be careful in here... The application's menubar is at your disposal.
-    //NotImplemented(_T("Format_Fortran_Indent_Plugin::BuildMenu()"));
+    //NotImplemented(_T("FormatFortranIndentPlugin::BuildMenu()"));
 }
 
 
-void Format_Fortran_Indent_Plugin::BuildModuleMenu( const ModuleType type, wxMenu* menu, const FileTreeData* data )
+void FormatFortranIndentPlugin::BuildModuleMenu( const ModuleType type, wxMenu* menu, const FileTreeData* data )
 {
     if ( !menu || !IsAttached() )
         return;
@@ -194,12 +194,12 @@ void Format_Fortran_Indent_Plugin::BuildModuleMenu( const ModuleType type, wxMen
 }
 
 
-bool Format_Fortran_Indent_Plugin::BuildToolBar(wxToolBar* toolBar)
+bool FormatFortranIndentPlugin::BuildToolBar(wxToolBar* toolBar)
 {
     //The application is offering its toolbar for your plugin,
     //to add any toolbar items you want...
     //Append any items you need on the toolbar...
-    NotImplemented(_T("Format_Fortran_Indent_Plugin::BuildToolBar()"));
+    NotImplemented(_T("FormatFortranIndentPlugin::BuildToolBar()"));
 
     // return true if you add toolbar items
     return false;
@@ -207,7 +207,7 @@ bool Format_Fortran_Indent_Plugin::BuildToolBar(wxToolBar* toolBar)
 
 
 ///
-bool Format_Fortran_Indent_Plugin::isFortranFilename( const wxFileName fname )
+bool FormatFortranIndentPlugin::isFortranFilename( const wxFileName fname )
 {
     wxString fExt;
     fExt = fname.GetExt().Lower();
@@ -218,7 +218,7 @@ bool Format_Fortran_Indent_Plugin::isFortranFilename( const wxFileName fname )
     return false;
 }
 
-bool Format_Fortran_Indent_Plugin::isFortranFilename( const wxString & filename )
+bool FormatFortranIndentPlugin::isFortranFilename( const wxString & filename )
 {
     bool isFortran = false;
     wxFileName fname;
@@ -228,7 +228,7 @@ bool Format_Fortran_Indent_Plugin::isFortranFilename( const wxString & filename 
 }
 
 
-void Format_Fortran_Indent_Plugin::OnFormatProject( wxCommandEvent& /*event*/ )
+void FormatFortranIndentPlugin::OnFormatProject( wxCommandEvent& /*event*/ )
 {
     ProjectManager* manager = Manager::Get()->GetProjectManager();
     wxTreeCtrl *tree = manager->GetUI().GetTree();
@@ -286,15 +286,15 @@ void Format_Fortran_Indent_Plugin::OnFormatProject( wxCommandEvent& /*event*/ )
     }
 }
 
-void Format_Fortran_Indent_Plugin::OnFormatActiveFile( wxCommandEvent& /*event*/ )
+void FormatFortranIndentPlugin::OnFormatActiveFile( wxCommandEvent& /*event*/ )
 {
         Execute();
 }
 
-int Format_Fortran_Indent_Plugin::Execute()
+int FormatFortranIndentPlugin::Execute()
 {
     // do your magic ;)
-    //NotImplemented(_T("Format_Fortran_Indent_Plugin::Execute()"));
+    //NotImplemented(_T("FormatFortranIndentPlugin::Execute()"));
     if( !IsAttached() )
         return -1;
 
@@ -319,7 +319,7 @@ int Format_Fortran_Indent_Plugin::Execute()
     //return -1;
 }
 
-void Format_Fortran_Indent_Plugin::FormatFile( const wxString &filename )
+void FormatFortranIndentPlugin::FormatFile( const wxString &filename )
 {
     cbEditor* ed = Manager::Get()->GetEditorManager()->IsBuiltinOpen( filename );
 
@@ -341,7 +341,7 @@ void Format_Fortran_Indent_Plugin::FormatFile( const wxString &filename )
 }
 
 
-bool Format_Fortran_Indent_Plugin::FormatEditor( cbEditor *ed )
+bool FormatFortranIndentPlugin::FormatEditor( cbEditor *ed )
 {
     cbStyledTextCtrl* control = ed->GetControl();
     if (control->GetReadOnly())

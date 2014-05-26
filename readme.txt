@@ -29,7 +29,7 @@ For information on Git，please see http://git-scm.com/ or https://github.com/gi
 For information on Git for Windows，please see http://code.google.com/p/msysgit/
 For information on TortoiseGit，please see http://code.google.com/p/tortoisegit/
 
-Format_Fortran_Indent_Plugin.cbplugin for Windows in repository is compiled by MinGW TDM-GCC with wxWidgets and Code::Blocks SDK. cbNightlyBuild branch is built for Code::Blocks Nightly Build for Windows. cbRelease branch is built for Code::Blocks Release for Windows. cbFortran branch is built for Code::Blocks IDE for Fortran for Windows. cbReleaseCentOS-i686 branch is built for Code::Blocks Release for Linux CentOS i686. cbReleaseCentOS-x86_64 branch is built for Code::Blocks Release for Linux CentOS x86_64. Keep source code for project only in master branch.
+FormatFortranIndentPlugin.cbplugin for Windows in repository is compiled by MinGW TDM-GCC with wxWidgets and Code::Blocks SDK. cbRelease branch is built for Code::Blocks Release for Windows. cbReleaseCentOS-i686 branch is built for Code::Blocks Release for Linux CentOS i686. Keep source code for project only in master branch.
 
 How to Use the Format Fortran Indent Plugin for Code::Blocks ?
 Please see https://github.com/ywx/FormatFortranIndentPlugin/wiki/HowtoUse-zh
@@ -68,7 +68,7 @@ For information on Code::Blocks Plug-In development, please see http://wiki.code
 For information on Code::Blocks IDE for Fortran, please see http://darmar.vgtu.lt/ or http://code.google.com/p/fortranproject/
 
 
-Last updated: May 1th 2013
+Last updated: May 26th 2014
 
 
 
@@ -96,7 +96,7 @@ git clone git://github.com/ywx/FormatFortranIndentPlugin.git FormatFortranIndent
 关于 Git for Windows，请访问 http://code.google.com/p/msysgit/
 关于 TortoiseGit，请访问 http://code.google.com/p/tortoisegit/
 
-仓库上的 Windows 版 Format_Fortran_Indent_Plugin.cbplugin 基于 wxWidgets 和 Code::Blocks SDK 由 MinGW TDM-GCC 编译生成。cbNightlyBuild 分支适用于 Code::Blocks Nightly Build for Windows 版本。cbRelease 分支适用于 Code::Blocks Release for Windows 版本。cbFortran 分支适用于 Code::Blocks IDE for Fortran for Windows 版本。cbReleaseCentOS-i686 分支适用于 Code::Blocks Release for Linux CentOS i686 版本。cbReleaseCentOS-x86_64 分支适用于 Code::Blocks Release for Linux CentOS x86_64 版本。master 分支只保留用于项目构建的源代码。
+仓库上的 Windows 版 FormatFortranIndentPlugin.cbplugin 基于 wxWidgets 和 Code::Blocks SDK 由 MinGW TDM-GCC 编译生成。cbRelease 分支适用于 Code::Blocks Release for Windows 版本。cbReleaseCentOS-i686 分支适用于 Code::Blocks Release for Linux CentOS i686 版本。master 分支只保留用于项目构建的源代码。
 
 How to Use the Format Fortran Indent Plugin for Code::Blocks ?
 请访问 https://github.com/ywx/FormatFortranIndentPlugin/wiki/HowtoUse-zh
@@ -137,4 +137,4 @@ How to change options for Format Fortran Indent Plugin ?
 Format Fortran Indent Plugin 只是运用正则表达式对源代码进行以行为单位的模式匹配，然后进行代码缩进格式化。所以它只能支持Fortran 95, Fortran 90语法中的一个子集。目前它还不能完美支持 type, function, subroutine 等语句，也不能支持 nonblock-do-construct 。有空的话，我会完善它。希望大家也来关心它，培养它。更希望有人能从编译原理方向重塑它。
 
 
-最后更新: 2013-5-1
+最后更新: 2014-5-26

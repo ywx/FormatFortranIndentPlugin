@@ -22,7 +22,7 @@ class CFortranIndentConfigDlg : public cbConfigurationPanel
 
 	protected:
         virtual wxString GetTitle() const { return _("Fortran Indent"); }
-        virtual wxString GetBitmapBaseName() const { return _T("Format_Fortran_Indent_Plugin"); }
+        virtual wxString GetBitmapBaseName() const { return _T("FormatFortranIndentPlugin"); }
         virtual void OnApply(){ SaveSettings(); }
         virtual void OnCancel(){}
 

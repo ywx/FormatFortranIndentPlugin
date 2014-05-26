@@ -1,6 +1,27 @@
 ﻿ChangeLog for Format Fortran Indent Plugin
 ------------------------------------------
 
+Version 0.2.3 2014-5-26
+=====================
+Rename Format_Fortran_Indent_Plugin to FormatFortranIndentPlugin
+
+Del cbReleaseCentOS-x86_64 cbFortran cbNightlyBuild branch
+Update readme
+
+Version 0.2.3 2014-2-8
+=====================
+Add "<Add option="-ansi" />" to be able to build on Linux
+
+Version 0.2.3 2013-12-30
+=====================
+Follow the tracks of Code::Blocks svn9181 ( create an abstract class with will handle all UI related calls made from the ProjectManager )
+
+Version 0.2.3 2013-5-1
+=====================
+Set Default PreprocessorType to PreprocessorType_CPreprocessor
+
+Update readme
+
 Version 0.2.3 2013-3-26
 =====================
 Could not support for CoCo( conditional compilation ) Preprocessor ( ISO/IEC 1539-3:1998 )
@@ -156,6 +177,27 @@ Create GitHub repository. https://github.com/ywx/FormatFortranIndentPlugin
 
 更新历史：
 ---------
+
+v0.2.3 2014-5-26
+=====================
+将 Format_Fortran_Indent_Plugin 更名为 FormatFortranIndentPlugin
+
+删除 cbReleaseCentOS-x86_64 cbFortran cbNightlyBuild 三个分支
+更新 readme
+
+v0.2.3 2014-2-8
+=====================
+增加 "<Add option="-ansi" />" 使其能在 Linux 构建
+
+v0.2.3 2013-12-30
+=====================
+跟踪 Code::Blocks svn9181 ( create an abstract class with will handle all UI related calls made from the ProjectManager )
+
+v0.2.3 2013-5-1
+=====================
+设置 Default PreprocessorType 为 PreprocessorType_CPreprocessor
+
+更新 readme
 
 v0.2.3 2013-3-26
 =================
