@@ -10,8 +10,7 @@
 					<orient>wxVERTICAL</orient>
 					<object class="sizeritem">
 						<object class="wxCheckBox" name="cb_SameAsEditor">
-							<label>Config Same As CB Editor</label>
-							<checked>1</checked>
+							<label>Config Same As Code::Blocks Editor</label>
 						</object>
 						<flag>wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_TOP</flag>
 						<border>8</border>
@@ -19,7 +18,6 @@
 					<object class="sizeritem">
 						<object class="wxCheckBox" name="cb_UseTab">
 							<label>Use Tabs instead of spaces</label>
-							<checked>1</checked>
 						</object>
 						<flag>wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_TOP</flag>
 						<border>8</border>

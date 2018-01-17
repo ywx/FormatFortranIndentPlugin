@@ -52,7 +52,7 @@ void CFortranIndentConfigDlg::LoadSettings()
     XRCCTRL(*this, "cb_UseTab", wxCheckBox)->SetValue( myFortranIndentConfig.isUseTab );
 	XRCCTRL(*this, "cb_UseTab", wxCheckBox)->Enable( ! myFortranIndentConfig.isSameAsEditor );
     XRCCTRL(*this, "sp_TabWidth", wxSpinCtrl)->SetValue( myFortranIndentConfig.iTabWidth );
-	XRCCTRL(*this, "sp_TabWidth", wxCheckBox)->Enable( ! ( myFortranIndentConfig.isSameAsEditor || myFortranIndentConfig.isUseTab ) );
+	XRCCTRL(*this, "sp_TabWidth", wxSpinCtrl)->Enable( ! ( myFortranIndentConfig.isSameAsEditor || myFortranIndentConfig.isUseTab ) );
     XRCCTRL(*this, "cb_KeepBlankLineOnly", wxCheckBox)->SetValue( myFortranIndentConfig.isKeepBlankLineOnly );
     XRCCTRL(*this, "cb_TrimLineFromRight", wxCheckBox)->SetValue( myFortranIndentConfig.isTrimLineFromRight );
     XRCCTRL(*this, "rb_PreprocessorType", wxRadioBox)->SetSelection( myFortranIndentConfig.iPreprocessorType );
@@ -75,11 +75,11 @@ void CFortranIndentConfigDlg::OnIsSameAsEditorClick(wxCommandEvent& event)
     bool isSameAsEditor = XRCCTRL(*this, "cb_SameAsEditor", wxCheckBox)->GetValue();
     XRCCTRL(*this, "cb_UseTab", wxCheckBox)->Enable( ! ( isSameAsEditor ) );
     bool isUseTab = XRCCTRL(*this, "cb_UseTab", wxCheckBox)->GetValue();
-    XRCCTRL(*this, "sp_TabWidth", wxCheckBox)->Enable( ! ( isSameAsEditor || isUseTab ) );
+    XRCCTRL(*this, "sp_TabWidth", wxSpinCtrl)->Enable( ! ( isSameAsEditor || isUseTab ) );
 }
 
 void CFortranIndentConfigDlg::OnIsUseTabClick(wxCommandEvent& event)
 {
     ///
-    XRCCTRL(*this, "sp_TabWidth", wxCheckBox)->Enable( ! ( XRCCTRL(*this, "cb_UseTab", wxCheckBox)->GetValue() ) );
+    XRCCTRL(*this, "sp_TabWidth", wxSpinCtrl)->Enable( ! ( XRCCTRL(*this, "cb_UseTab", wxCheckBox)->GetValue() ) ); // event.IsChecked()
 }
